@@ -23,8 +23,13 @@ services:
         - database
     aggregatorservice:
       build: ./aggregatorservice
+      environment:
+        FRONTENDHOSTNAME: localhost
+        FRONTENDPORT: 3000
+        HTTP_PORT: 3002
+
       ports:
-        - "7777:7777"
+        - "7777:3002"
     supplementalservice:
       build: ./supplementalservice
       ports:

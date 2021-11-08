@@ -92,6 +92,51 @@ The rest of this README details my work and what I did.
 
 ## Run it all together locally with Docker compose!
 
-* Of note, need to expose 
+* Of note, need to expose ports externally at the web front-end calls them
+    * Can't lock it down to internal networking when the browser does the calls
+    * Am able to lock down postgresql database, so that's done
+* Check the following urls:
+    * (aggregratorService)[http://localhost:7777/ping]
+    * (supplementalService)[http://localhost:3001/api/v1/1]
+    * (dashboard-api)[http://localhost:8080/api/v1/condenser]
+    * (dashboard-web)[http://localhost:3000]
+
+## Parameterize web URLs and Health Checks
+
+Essentially, everything is hard-coded for localhost:XXXX.
+We need to make all of these services use an environment variable instead for these variables.
+
+Additional, good time to add health checks to all the APIs for Kubernetes to use later. All should be a /health or /api/v1/health endpoint.
+
+### Changes to aggregatorService
+
+Luckily, api/v1/ping already exists. For consistency sake,
+best to add a api/v1/health endpoint.
+
+Since aggregatorService's only real dependency on localhost is related to CORS,
+pretty easy.
+
+Add the following to the main function in `main.go`:
+```
+    frontendHostname := os.Getenv("FRONTENDHOSTNAME")
+	frontendPort := os.Getenv("FRONTENDPORT")
+
+	// Defaults for dev environment
+	if frontendHostname == "" {
+		frontendHostname = "localhost"
+	}
+	if frontendPort == "" {
+		frontendPort = "3000"
+	}
+```
+Be sure to edit the CORS hostname variable too!
+`"http://"+frontendHostname+":"+frontendPort`
+
+### Changes to supplementalService
+
+
+### Changes to dashboard-api
+
+### Changes to dashboard-web
 
 

@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+    web:
+      build: ./dashboard-web
+      ports:
+        - "3000:80"
+    database:
+      build: ./dashboard-database
+      volumes:
+        - dbdata:/var/lib/postgresql/data
+      networks:
+        - apinet
+    api:
+      build: ./dashboard-api
+      ports:
+        - "8080:8080"
+      networks:
+        - apinet
+      # This makes mcmsdb resolve to database service
+      links:
+        - "database:mcmsdb"
+      depends_on: 
+        - database
+    aggregatorservice:
+      build: ./aggregatorservice
+      ports:
+        - "7777:7777"
+    supplementalservice:
+      build: ./supplementalservice
+      ports:
+        - "3001:3001"
+
+networks:
+    apinet:
+volumes:
+    dbdata:

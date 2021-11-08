@@ -1,3 +1,12 @@
 [submodule "aggregatorService"]
 	path = aggregatorService
 	url = https://github.com/ProNibs/aggregatorService.git
+[submodule "dashboard-database"]
+	path = dashboard-database
+	url = https://github.com/ProNibs/dashboard-database.git
+[submodule "dashboard-api"]
+	path = dashboard-api
+	url = https://github.com/ProNibs/dashboard-api.git
+[submodule "dashboard-web"]
+	path = dashboard-web
+	url = https://github.com/flatiron-school/dashboard-web.git

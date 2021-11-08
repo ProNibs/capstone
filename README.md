@@ -80,7 +80,15 @@ The rest of this README details my work and what I did.
     * `docker run --rm -p 80:80 dashboard-web:1.0`
     * `curl localhost:80`
 
-### Create Dockerfile for 
+### Create Dockerfile for supplementalService (Node.js backend)
+
+* Ensure git submodule was created correctly
+* Variables of note:
+    * 3001 is default port
+* Create Dockerfile and test it:
+    * `docker build -t supplementalservice:1.0 .`
+    * `docker run --rm -p 3001:3001 supplementalservice:1.0`
+    * `curl localhost:3001/api/v1/1`
 
 ## Run it all together locally with Docker compose!
 

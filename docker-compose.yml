@@ -27,7 +27,13 @@ services:
         FRONTENDHOSTNAME: localhost
         FRONTENDPORT: 3000
         HTTP_PORT: 3002
-
+      # This doesn't actually work unless curl is on the container, but whatever :)
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:3002/health"]
+        interval: 10s
+        timeout: 5s
+        retries: 3
+        start_period: 1s
       ports:
         - "7777:3002"
     supplementalservice:

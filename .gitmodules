@@ -1,0 +1,3 @@
+[submodule "aggregatorService"]
+	path = aggregatorService
+	url = https://github.com/flatiron-school/aggregatorService.git

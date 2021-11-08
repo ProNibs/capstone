@@ -9,7 +9,7 @@ The rest of this README details my work and what I did.
 * Create repo on Github
 * `git clone` the repo
 * `git checkout -b develop` to create a new branch named "develop"
-* Fork all of the repos provided by Flatiron to personal Github
+* Fork **all** of the repos provided by Flatiron to personal Github
     * This is so I can edit the code on my own if desired
 * Use [Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) to pull in the three forked repos
     * `git submodule add "URL"`
@@ -22,7 +22,7 @@ The rest of this README details my work and what I did.
         * Changes are now available locally
 
 
-## Create Dockerfile for aggregatorService
+## Create Dockerfile for aggregatorService (Go API backend)
 
 * Create a Dockerfile in the aggregatorService directory for golang
 * Just go look at it, don't want to spend time detailing how to make Dockerfiles for go.
@@ -34,4 +34,36 @@ The rest of this README details my work and what I did.
     * `curl localhost:7777/ping`
     * Should receive a JSON detailing status: OK
 
-## Create Dockerfile for 
+## Review dashboard-database (Postgres)
+
+* Ensure git submodule was created correctly
+* This one has a Dockerfile already, so should be good to go
+* Variables of note:
+    * 5432 is default port
+    * User=postgres, Password=password, Database=postgres
+    * SQL scripts create a user named `mcmsuser` with password `mcmsuser123!`
+* Verify Dockerfile works:
+    * `docker build -t mcmsdb:1.0 .`
+    * `docker run --rm --name mcmsdb -it mcmsdb:1.0`
+    * If you want to get the down and dirty psql:
+        * `docker exec -it mcmsdb bash`
+        * Of note, `psql -U mcmsuser` will not work, so need to login as `postgres` user and swap to `mcmsuser`.
+        * However, without doing above, can see the user exists with `\du`.
+
+## Create Dockerfile for dashboard-api (Java Spring Backend)
+
+* Ensure git submodule was created correctly
+* Variables of note:
+    * 8080 is default port
+    * Assumes postgresql is running on localhost:5432
+    * Uses the `mcmsuser` for postgres database as mentioned above
+* Create Dockerfile and test it:
+    * **Note:** For my Dockerfile to work, I updated build.gradle with jar {enabled = false}. 
+    * `docker build -t dashboard-api:1.0 .`
+    * `docker network create apinet`
+    * `docker run --rm --network=apinet --name mcmsdb mcmsdb:1.0`
+    * Update MCMSDataSourceConfig.java and flyway.conf with `mcmsdb:5432` instead of `localhost:5432`
+    * `docker run --rm -p 8080:8080 --network=apinet dashboard-api:1.0`
+    * 
+
+

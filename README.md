@@ -24,4 +24,14 @@ The rest of this README details my work and what I did.
 
 ## Create Dockerfile for aggregatorService
 
-* Create a Dockerfile in the aggregatorService directory
+* Create a Dockerfile in the aggregatorService directory for golang
+* Just go look at it, don't want to spend time detailing how to make Dockerfiles for go.
+    * I put comments into the Dockerfile even.
+* Of note is that the go service defaults to port 7777.
+* Verify the Dockerfile works:
+    * `docker build -t aggregatorservice:1.0 .`
+    * `docker run --rm -p 7777:7777 aggregatorservice:1.0`
+    * `curl localhost:7777/ping`
+    * Should receive a JSON detailing status: OK
+
+## Create Dockerfile for 

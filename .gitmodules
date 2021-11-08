@@ -9,7 +9,7 @@
 	url = https://github.com/ProNibs/dashboard-api.git
 [submodule "dashboard-web"]
 	path = dashboard-web
-	url = https://github.com/flatiron-school/dashboard-web.git
+	url = https://github.com/ProNibs/dashboard-web.git
 [submodule "supplementalService"]
 	path = supplementalService
 	url = https://github.com/ProNibs/supplementalService.git

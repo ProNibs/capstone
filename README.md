@@ -21,8 +21,9 @@ The rest of this README details my work and what I did.
         * `git fetch`
         * Changes are now available locally
 
+## Creating Dockerfiles for each microservice
 
-## Create Dockerfile for aggregatorService (Go API backend)
+### Create Dockerfile for aggregatorService (Go API backend)
 
 * Create a Dockerfile in the aggregatorService directory for golang
 * Just go look at it, don't want to spend time detailing how to make Dockerfiles for go.
@@ -34,7 +35,7 @@ The rest of this README details my work and what I did.
     * `curl localhost:7777/ping`
     * Should receive a JSON detailing status: OK
 
-## Review dashboard-database (Postgres)
+### Review dashboard-database (Postgres)
 
 * Ensure git submodule was created correctly
 * This one has a Dockerfile already, so should be good to go
@@ -50,7 +51,7 @@ The rest of this README details my work and what I did.
         * Of note, `psql -U mcmsuser` will not work, so need to login as `postgres` user and swap to `mcmsuser`.
         * However, without doing above, can see the user exists with `\du`.
 
-## Create Dockerfile for dashboard-api (Java Spring Backend)
+### Create Dockerfile for dashboard-api (Java Spring Backend)
 
 * Ensure git submodule was created correctly
 * Variables of note:
@@ -64,6 +65,25 @@ The rest of this README details my work and what I did.
     * `docker run --rm --network=apinet --name mcmsdb mcmsdb:1.0`
     * Update MCMSDataSourceConfig.java and flyway.conf with `mcmsdb:5432` instead of `localhost:5432`
     * `docker run --rm -p 8080:8080 --network=apinet dashboard-api:1.0`
-    * 
+    * `curl localhost:8080/api/v1/condenser`
+        * If everything is working, should get a json response of pre-populated data.
+
+### Create Dockerfile for dashboard-web (NPM-React Frontend)
+
+* Ensure git submodule was created correctly
+* Variables of note:
+    * 3000 is default port
+    * localhost:8080 for connection to condensor in apiSlice
+    * localhost:7777/condenser for Aggregator is used in AggregatorInfo
+* Create Dockerfile and test it:
+    * `docker build -t dashboard-web:1.0 .`
+    * `docker run --rm -p 80:80 dashboard-web:1.0`
+    * `curl localhost:80`
+
+### Create Dockerfile for 
+
+## Run it all together locally with Docker compose!
+
+* Of note, need to expose 
 
 

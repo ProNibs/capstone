@@ -9,7 +9,9 @@ The rest of this README details my work and what I did.
 * Create repo on Github
 * `git clone` the repo
 * `git checkout -b develop` to create a new branch named "develop"
-* Use [Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) to pull in the three repos
+* Fork all of the repos provided by Flatiron to personal Github
+    * This is so I can edit the code on my own if desired
+* Use [Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) to pull in the three forked repos
     * `git submodule add "URL"`
     * If looking to clone this from scratch, need to run the following:
         * `git submodule init`
@@ -20,3 +22,6 @@ The rest of this README details my work and what I did.
         * Changes are now available locally
 
 
+## Create Dockerfile for aggregatorService
+
+* Create a Dockerfile in the aggregatorService directory

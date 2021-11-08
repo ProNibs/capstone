@@ -132,6 +132,8 @@ Add the following to the main function in `main.go`:
 Be sure to edit the CORS hostname variable too!
 `"http://"+frontendHostname+":"+frontendPort`
 
+Lastly, update docker-compose to have these environment variables and health check defined there.
+
 ### Changes to supplementalService
 
 

@@ -156,6 +156,40 @@ Be sure to update the server.listen() function to use these variables now.
 
 ### Changes to dashboard-api
 
+Pretty easy for the healthcheck, add the following to src/main/java/com/flatironschool/dashboard/controller.java:
+```
+    @GetMapping("/")
+    public String healthCheck() {
+        return "OK";
+    }
+```
+
+Environment variable wise, not so simple as we have both CORS, database info, and spring boot itself.
+
+Let's start with the database info.
+Add the following to MCMSDataSourceConfig.java:
+```
+    // the part after the colon is defaults
+    @Value("${DATABASE_HOSTNAME:localhost}")
+    private String database_hostname;
+    @Value("${DATABASE_PORT:5432}")
+    private String database_port;
+    @Value("${DATABASE_NAME:mcmsdb}")
+    private String database_name;
+    @Value("${DATABASE_USER:mcmsuser}")
+    private String database_user;
+    @Value("${DATABASE_PASSWORD:mcmsuser123!}")
+    private String database_password;
+```
+
+Be sure to import the `@Value` annotation and then update getDataSource() to use these values now.
+
+Looking into it, don't even need the flyway.conf file, so comment that out of the Dockerfile.
+
+On to the CORS issues: (it's a pain)[https://stackoverflow.com/questions/42874351/spring-boot-enabling-cors-by-application-properties].
+
+I added a new file under the config folder named WebConfig.
+This sets global CORS values as well as allows import of environment variables.
 
 ### Changes to dashboard-web
 

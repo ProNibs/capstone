@@ -1,0 +1,12 @@
+controller:
+  JCasC:
+    configScripts:
+      welcome-message: |
+        jenkins:
+          systemMessage: Welcome to Andrew's CI\CD server.  This Jenkins is configured and managed 'as code'. Top kek.
+  installPlugins:
+    - kubernetes:1.30.6
+    - workflow-aggregator:2.6
+    - git:4.10.0
+    - configuration-as-code:1.54
+    - github:1.34.1

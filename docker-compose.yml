@@ -30,16 +30,17 @@ services:
       # This doesn't actually work unless curl is on the container, but whatever :)
       healthcheck:
         test: ["CMD", "curl", "-f", "http://localhost:3002/health"]
-        interval: 10s
-        timeout: 5s
-        retries: 3
-        start_period: 1s
       ports:
         - "7777:3002"
     supplementalservice:
       build: ./supplementalservice
       ports:
-        - "3001:3001"
+        - "3002:3002"
+      environment:
+        HOSTNAME: localhost
+        PORT: 3002
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:3001/api/v1/health"]
 
 networks:
     apinet:

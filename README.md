@@ -136,8 +136,26 @@ Lastly, update docker-compose to have these environment variables and health che
 
 ### Changes to supplementalService
 
+Super easy to add a healthcheck API endpoint.
+Add the following to api.js:
+```
+// Health
+router.get("/health", (req,res) => {
+  res.status(200);
+  res.send("OK");
+})
+```
+
+For the environment variables, pretty straight forward.
+```
+// Pull in environment variables
+const HOSTNAME = process.env.HOSTNAME || "localhost";
+const PORT = process.env.PORT || 3001;
+```
+Be sure to update the server.listen() function to use these variables now.
 
 ### Changes to dashboard-api
+
 
 ### Changes to dashboard-web
 

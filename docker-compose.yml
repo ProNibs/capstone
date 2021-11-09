@@ -6,6 +6,10 @@ services:
         - "3000:80"
     database:
       build: ./dashboard-database
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: password
+        POSTGRES_DB: postgres
       volumes:
         - dbdata:/var/lib/postgresql/data
       networks:

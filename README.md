@@ -158,9 +158,30 @@ Be sure to update the server.listen() function to use these variables now.
 
 Pretty easy for the healthcheck, add the following to src/main/java/com/flatironschool/dashboard/controller.java:
 ```
-    @GetMapping("/")
+    @GetMapping("/health")
     public String healthCheck() {
         return "OK";
+    }
+```
+
+Something different than the other options is the need for a readiness check.
+As opposed to the other services, none of them "rely" on anything else, so being healthy = being ready for traffic.
+For the dashboard-api, this is not the case. 
+
+Same place as /health, add in /ready.
+```
+@GetMapping("/ready")
+    public ResponseEntity readyCheck() {
+        try {
+            // Ensure data is pre-populated correctly
+            if (getAllCondensers().iterator().hasNext()) {
+                return new ResponseEntity(HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.SERVICE_UNAVAILABLE);
+        }
+        // Not connected to DB yet, return 503
+        return new ResponseEntity(HttpStatus.SERVICE_UNAVAILABLE);
     }
 ```
 

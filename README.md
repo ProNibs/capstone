@@ -214,4 +214,29 @@ This sets global CORS values as well as allows import of environment variables.
 
 ### Changes to dashboard-web
 
+Last one!
+Health check is easy, just see if the nginx container is running or not at root.
+No need for explicit /health api endpoint.
+No need for ready checks either as React can handle things being a little slow to spin up and be query-able.
+
+Parameterizing-wise, this one is the main integrator,
+so naturally it has A LOT of parameters required.
+Additional, React Front-ends end up being static websites,
+so this is actually a pain.
+
+The trick here is create a `env.js` file that defines all the environment variables and places them in window.env.X,
+then import the script into your index.html file.
+Most importantly, change the docker entrypoint to run the a script to update
+the `env.js` file with the actually environment variables.
+Finally, you can now read the variables from the window.env.X.
+
+The way I implemented it means there is no "dev" instance of this, only "prod".
+
+
+
+
+
+
+
+
 

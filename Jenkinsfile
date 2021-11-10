@@ -9,6 +9,7 @@ def repositories = [
 
 def generateBuildStage(list) {
     return {
+        node {
         agent {
             kubernetes {
                 containerTemplate {
@@ -25,6 +26,7 @@ def generateBuildStage(list) {
                     sh '/kaniko/executor -c `pwd`/${list} --no-push'
                 }
             }
+        }
         }
     }
 }

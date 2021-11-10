@@ -26,6 +26,8 @@ pipeline {
                 container('kaniko') {
                     create_containers(repositories)
                     sh "ls -a"
+                    sh "pwd"
+                    sh "ls aggregatorService"
                     sh '/kaniko/executor -v debug -c `pwd`/aggregatorService --no-push'
                 }
             }

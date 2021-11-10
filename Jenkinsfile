@@ -4,11 +4,13 @@ pipeline {
             inheritFrom 'kaniko'
         }
     }
-    stages {
-        stage('build') {
-            steps {
-                sh "echo HELLO WORLD!"
-                sh "/kaniko/executor --help"
+    node('container-build-agent') {
+        stages {
+            stage('build') {
+                steps {
+                    sh "echo HELLO WORLD!"
+                    sh "/kaniko/executor --help"
+                }
             }
         }
     }

@@ -23,10 +23,10 @@ pipeline {
         stage('build') {
             steps {
                 sh "echo HELLO WORLD!"
-                script {
-                    create_containers(repositories)
-                }
                 container('kaniko') {
+                    script {
+                        create_containers(repositories)
+                    }
                     sh "ls -a"
                     sh "/kaniko/executor -f `pwd`/aggregatorService/Dockerfile --no-push"
                 }
@@ -38,6 +38,8 @@ pipeline {
 def create_containers(list) {
     for (i in list) {
         //println "Directory is ${i}"
+        sh "ls ${i}"
+        sh "cd ${i}"
         sh "ls ${i}"
     }
 }

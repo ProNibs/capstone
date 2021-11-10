@@ -4,11 +4,13 @@ pipeline {
             inheritFrom 'kaniko'
         }
     }
-    node('container-build-agent') {
+    node('POD_LABEL') {
             stage('build') {
                 steps {
                     sh "echo HELLO WORLD!"
-                    sh "/kaniko/executor --help"
+                    container('kaniko') {
+                        sh "/kaniko/executor --help"
+                    }
                 }
             }
     }

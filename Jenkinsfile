@@ -51,6 +51,17 @@ pipeline {
                     }
                 }
                 stage('Build Dashboard-API') {
+                    agent {
+                        kubernetes {
+                            containerTemplate {
+                                name 'kaniko'
+                                image 'gcr.io/kaniko-project/executor:v1.5.0-debug'
+                                ttyEnabled true
+                                command '/busybox/cat'
+
+                            }
+                        }
+                    }
                     steps {
                         echo "Building Dashboard-API container..."
                         container('kaniko') {    
@@ -59,6 +70,18 @@ pipeline {
                     }
                 }
                 stage('Build Dashboard-Web') {
+                    // Get resource hogs their own pod
+                    agent {
+                        kubernetes {
+                            containerTemplate {
+                                name 'kaniko'
+                                image 'gcr.io/kaniko-project/executor:v1.5.0-debug'
+                                ttyEnabled true
+                                command '/busybox/cat'
+
+                            }
+                        }
+                    }
                     steps {
                         echo "Building Dashboard-Web container..."
                         container('kaniko') {    

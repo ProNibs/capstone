@@ -10,23 +10,23 @@ def repositories = [
 def generateBuildStage(list) {
     return {
         node {
-        agent {
-            kubernetes {
-                containerTemplate {
-                    name 'kaniko'
-                    image 'gcr.io/kaniko-project/executor:debug'
-                    ttyEnabled true
-                    command '/busybox/cat'
+            agent {
+                kubernetes {
+                    containerTemplate {
+                        name 'kaniko'
+                        image 'gcr.io/kaniko-project/executor:debug'
+                        ttyEnabled true
+                        command '/busybox/cat'
+                    }
                 }
             }
-        }
-        stage("build-${list}") {
-            steps {
-                container('kaniko') { 
-                    sh '/kaniko/executor -c `pwd`/${list} --no-push'
+            stage("build-${list}") {
+                steps {
+                    container('kaniko') { 
+                        sh '/kaniko/executor -c `pwd`/${list} --no-push'
+                    }
                 }
             }
-        }
         }
     }
 }
@@ -37,26 +37,26 @@ def parallelBuildStagesMap = repositories.collectEntries {
 
 parallel generateBuildStage
 
-// pipeline {
-//     agent {
-//         kubernetes {
-//             containerTemplate {
-//                 name 'kaniko'
-//                 image 'gcr.io/kaniko-project/executor:debug'
-//                 ttyEnabled true
-//                 command '/busybox/cat'
-//             }
-//         }
-//     }
-//     stages {
-//         stage('Build Containers') {
-//             steps {
-//                 sh "echo HELLO WORLD!"
-//                 script {
-//                     echo parallelBuildStagesMap.toString()
-//                     //parallel parallelBuildStagesMap
-//                 }
-//             }
-//         }
-//     }
-// }
+pipeline {
+    agent {
+        kubernetes {
+            containerTemplate {
+                name 'kaniko'
+                image 'gcr.io/kaniko-project/executor:debug'
+                ttyEnabled true
+                command '/busybox/cat'
+            }
+        }
+    }
+    stages {
+        stage('Build Containers') {
+            steps {
+                sh "echo HELLO WORLD!"
+                script {
+                    //echo parallelBuildStagesMap.toString()
+                    parallel parallelBuildStagesMap
+                }
+            }
+        }
+    }
+}

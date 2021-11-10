@@ -10,16 +10,6 @@ def repositories = [
 def generateBuildStage(list) {
     return {
         stage("build-${list}") {
-            agent {
-                kubernetes {
-                    containerTemplate {
-                        name 'kaniko'
-                        image 'gcr.io/kaniko-project/executor:debug'
-                        ttyEnabled true
-                        command '/busybox/cat'
-                    }
-                }
-            }
             steps {
                 container('kaniko') { 
                     sh '/kaniko/executor -c `pwd`/${list} --no-push'
@@ -34,7 +24,16 @@ def parallelBuildStagesMap = repositories.collectEntries {
 }
 
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            containerTemplate {
+                name 'kaniko'
+                image 'gcr.io/kaniko-project/executor:debug'
+                ttyEnabled true
+                command '/busybox/cat'
+            }
+        }
+    }
     stages {
         stage('build') {
             steps {

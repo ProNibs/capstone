@@ -10,7 +10,6 @@ repositories = [
 pipeline {
     agent {
         kubernetes {
-            label 'kaniko'
             containerTemplate {
                 name 'kaniko'
                 image 'gcr.io/kaniko-project/executor:debug'
@@ -24,9 +23,7 @@ pipeline {
             steps {
                 sh "echo HELLO WORLD!"
                 container('kaniko') {
-                    script {
-                        create_containers(repositories)
-                    }
+                    create_containers(repositories)
                     sh "ls -a"
                     sh "/kaniko/executor -f `pwd`/aggregatorService/Dockerfile --no-push"
                 }

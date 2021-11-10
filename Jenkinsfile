@@ -1,9 +1,9 @@
 pipeline {
     agent {
         kubernetes {
-            label 'kaniko'
-            cloud 'kubernetes'
-            inheritFrom 'kaniko'
+            podTemplate {
+                inheritFrom 'kaniko'
+            }
         }
     }
     stages {

@@ -1,9 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-            podTemplate {
-                inheritFrom 'kaniko'
-            }
+            inheritFrom 'kaniko'
         }
     }
     stages {

@@ -14,7 +14,7 @@ pipeline {
                 name 'kaniko'
                 image 'gcr.io/kaniko-project/executor:debug'
                 ttyEnabled true
-                command 'cat'
+                command '/busybox/cat'
             }
         }
     }
@@ -22,10 +22,10 @@ pipeline {
         stage('build') {
             steps {
                 sh "echo HELLO WORLD!"
-                container('kaniko') {
+                container('kaniko', shell: '/busybox/sh') {
                     create_containers(repositories)
                     sh "ls -a"
-                    sh "/kaniko/executor -c `pwd`/aggregatorService -f `pwd`/aggregatorService/Dockerfile --no-push"
+                    sh "/kaniko/executor -c `pwd`/aggregatorService --no-push"
                 }
             }
         }

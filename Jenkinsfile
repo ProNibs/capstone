@@ -23,12 +23,9 @@ pipeline {
         stage('build') {
             steps {
                 sh "echo HELLO WORLD!"
-                container('kaniko') {
-                    create_containers(repositories)
-                    sh "ls -a"
-                    sh "pwd"
-                    sh "ls aggregatorService"
-                    sh '/kaniko/executor -v debug -c `pwd`/aggregatorService --no-push'
+                script {
+                    echo create_container(repositories)
+                    parallel(create_container(repositories))
                 }
             }
         }
@@ -36,10 +33,13 @@ pipeline {
 }
 
 def create_containers(list) {
+    running_set = [:]
     for (i in list) {
-        //println "Directory is ${i}"
-        sh "ls ${i}"
-        sh "cd ${i}"
-        sh "ls ${i}"
+        running_set << ["Build ${i}'s container" : {
+            container('kaniko') { 
+                sh '/kaniko/executor -c `pwd`/${i} --no-push'
+            }
+        }]
     }
+    return running_set
 }

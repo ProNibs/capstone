@@ -19,7 +19,6 @@ def generateBuildStage(list) {
                     containerTemplate {
                         name 'kaniko'
                         image 'gcr.io/kaniko-project/executor:debug'
-                        workingDir '/tmp/jenkins'
                         ttyEnabled true
                         command '/busybox/cat'
                     }
@@ -41,6 +40,7 @@ pipeline {
             steps {
                 sh "echo HELLO WORLD!"
                 script {
+                    echo parallelBuildStagesMap
                     parallel parallelBuildStagesMap
                 }
             }

@@ -19,6 +19,12 @@ controller:
                           url('https://github.com/pronibs/capstone.git')
                         }
                         branches('*/main', '*/develop')
+                        extensions {
+                          submoduleOptions {
+                            disable(false)
+                            recursive(true)
+                          }
+                        }
                       }
                     }
                     lightweight()

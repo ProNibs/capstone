@@ -20,12 +20,6 @@ pipeline {
         }
     }
     stages {
-        stage('Pull git submodules') {
-            steps {
-                sh "git submodule foreach git checkout master"
-                sh "git submodule foreach git pull"
-            }
-        }
         stage('build') {
             steps {
                 sh "echo HELLO WORLD!"

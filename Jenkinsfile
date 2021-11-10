@@ -8,9 +8,7 @@ def repositories = [
 ]
 
 def containerBuild(String inputName) {
-    return {
-        sh "/kaniko/executor -c `pwd`/${inputName} --no-push"
-    }
+    sh "/kaniko/executor -c `pwd`/${inputName} --no-push"
 }
 
 pipeline {

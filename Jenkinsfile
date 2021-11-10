@@ -9,6 +9,16 @@ def repositories = [
 
 def generateBuildStage(list) {
     return {
+        agent {
+            kubernetes {
+                containerTemplate {
+                    name 'kaniko'
+                    image 'gcr.io/kaniko-project/executor:debug'
+                    ttyEnabled true
+                    command '/busybox/cat'
+                }
+            }
+        }
         stage("build-${list}") {
             steps {
                 container('kaniko') { 
@@ -23,26 +33,28 @@ def parallelBuildStagesMap = repositories.collectEntries {
     ["${it}" : generateBuildStage(it)]
 }
 
-pipeline {
-    agent {
-        kubernetes {
-            containerTemplate {
-                name 'kaniko'
-                image 'gcr.io/kaniko-project/executor:debug'
-                ttyEnabled true
-                command '/busybox/cat'
-            }
-        }
-    }
-    stages {
-        stage('Build Containers') {
-            steps {
-                sh "echo HELLO WORLD!"
-                script {
-                    echo parallelBuildStagesMap.toString()
-                    //parallel parallelBuildStagesMap
-                }
-            }
-        }
-    }
-}
+parallel generateBuildStage
+
+// pipeline {
+//     agent {
+//         kubernetes {
+//             containerTemplate {
+//                 name 'kaniko'
+//                 image 'gcr.io/kaniko-project/executor:debug'
+//                 ttyEnabled true
+//                 command '/busybox/cat'
+//             }
+//         }
+//     }
+//     stages {
+//         stage('Build Containers') {
+//             steps {
+//                 sh "echo HELLO WORLD!"
+//                 script {
+//                     echo parallelBuildStagesMap.toString()
+//                     //parallel parallelBuildStagesMap
+//                 }
+//             }
+//         }
+//     }
+// }

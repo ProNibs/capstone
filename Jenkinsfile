@@ -9,11 +9,9 @@ def repositories = [
 
 def containerBuild(String inputName) {
     return {
-        sh '/kaniko/executor -c `pwd`/${inputName} --no-push'
+        sh "/kaniko/executor -c `pwd`/${inputName} --no-push"
     }
 }
-
-
 
 pipeline {
     agent {
@@ -40,6 +38,27 @@ pipeline {
                     steps {
                         container('kaniko') {    
                             containerBuild('supplementalService')
+                        }
+                    }
+                }
+                stage('Build Dashboard-Database') {
+                    steps {
+                        container('kaniko') {    
+                            containerBuild('dashboard-database')
+                        }
+                    }
+                }
+                stage('Build Dashboard-API') {
+                    steps {
+                        container('kaniko') {    
+                            containerBuild('dashboard-api')
+                        }
+                    }
+                }
+                stage('Build Dashboard-Web') {
+                    steps {
+                        container('kaniko') {    
+                            containerBuild('dashboard-web')
                         }
                     }
                 }

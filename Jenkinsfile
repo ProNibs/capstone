@@ -33,7 +33,9 @@ pipeline {
             parallel {
                 stage('Build AggregatorService') {
                     steps {
-                        containerBuild('aggregatorService')
+                        script {
+                            containerBuild('aggregatorService')
+                        }
                     }
                 }
                 stage('Build SupplementalService') {

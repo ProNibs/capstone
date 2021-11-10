@@ -10,11 +10,11 @@ repositories = [
 def create_containers(list) {
     running_set = [:]
     for (i in list) {
-        running_set << ["Build ${i}'s container" : {
+        running_set["Build ${i}'s container"] = {
             container('kaniko') { 
                 sh '/kaniko/executor -c `pwd`/${i} --no-push'
             }
-        }]
+        }
     }
     return running_set
 }

@@ -13,6 +13,7 @@ pipeline {
             containerTemplate {
                 name 'kaniko'
                 image 'gcr.io/kaniko-project/executor:debug'
+                workingDir '/tmp/jenkins'
                 ttyEnabled true
                 command '/busybox/cat'
             }
@@ -25,7 +26,7 @@ pipeline {
                 container('kaniko') {
                     create_containers(repositories)
                     sh "ls -a"
-                    sh '/kaniko/executor -c `pwd`/aggregatorService -f `pwd`/aggregatorService/Dockerfile --no-push -v=debug'
+                    sh '/kaniko/executor -v debug -c `pwd`/aggregatorService --no-push'
                 }
             }
         }

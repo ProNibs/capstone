@@ -11,6 +11,21 @@ helm repo add jenkinsci https://charts.jenkins.io
 helm repo update
 ```
 
+That's it, it's automatically tied to my capstone repo.
+Only sad part is I must manually build in Jenkins until I get a proper domain setup for it for Github to send webhooks at.
+
+Login info:
+
+- username: admin
+- To get the password, run `kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/chart-admin-password && echo`
+# Optional: Setup Jenkins to pull from Github Organization
+
+## Add GitHub PAT as a secret to Kubernetes
+
+Quicky, replace the last password with your own PAT token:
+`kubectl create secret -n jenkins generic pronibs-pat --from-literal=password=password`
+If you rename it, be sure to update the values.yaml file to reflect that change.
+
 
 ## Setup Jenkins to auto-poll Github
 
@@ -28,7 +43,9 @@ Assuming Github being used here!
     - Pick your credentials and the "Test Connection" box
     - If successful, click the "Manage Hooks" box and click Save+Apply.
 
-## Setup Jenkins Job
+# Optional: Manually Setup Jenkins Job
+
+For the record, this is have been automated as code in the "JCasC" section of the `values.yaml`.
 
 1) Go to the Jenkins UI
 2) Click "New Item" on the left

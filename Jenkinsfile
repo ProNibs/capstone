@@ -35,12 +35,12 @@ pipeline {
         }
     }
     stages {
-        stage('build') {
+        stage('Build Containers') {
             steps {
                 sh "echo HELLO WORLD!"
                 script {
                     echo "$parallelBuildStagesMap"
-                    parallel parallelBuildStagesMap
+                    parallel parallelBuildStagesMap()
                 }
             }
         }

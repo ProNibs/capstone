@@ -36,8 +36,8 @@ pipeline {
             steps {
                 sh "echo HELLO WORLD!"
                 script {
-                    echo create_container(repositories)
-                    parallel(create_container(repositories))
+                    echo create_containers(repositories)
+                    parallel(create_containers(repositories))
                 }
             }
         }

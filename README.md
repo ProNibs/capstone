@@ -240,3 +240,7 @@ The way I implemented it means there is no "dev" instance of this, only "prod".
 
 
 
+
+## Configure and Run Jenkins
+
+From here on out, things get interesting.

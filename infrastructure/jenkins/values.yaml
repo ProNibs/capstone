@@ -13,6 +13,7 @@ controller:
                     - name: "container-build-agent"  
                       image: "gcr.io/kaniko-project/executor"
                       command: "/busybox/cat"
+                      tty: true
         jobs:
           - script: >
               pipelineJob('capstone') {

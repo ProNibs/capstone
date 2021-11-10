@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            label 'kaniko'
+        }
+    }
     stages {
         stage('build') {
             steps {

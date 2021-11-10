@@ -8,9 +8,11 @@ def repositories = [
 ]
 
 def containerBuild(String inputName) {
-    steps {
-        container('kaniko') { 
-            sh '/kaniko/executor -c `pwd`/${inputName} --no-push'
+    return {
+        steps {
+            container('kaniko') { 
+                sh '/kaniko/executor -c `pwd`/${inputName} --no-push'
+            }
         }
     }
 }

@@ -9,10 +9,8 @@ def repositories = [
 
 def containerBuild(String inputName) {
     return {
-        steps {
-            container('kaniko') { 
-                sh '/kaniko/executor -c `pwd`/${inputName} --no-push'
-            }
+        container('kaniko') { 
+            sh '/kaniko/executor -c `pwd`/${inputName} --no-push'
         }
     }
 }
@@ -34,7 +32,9 @@ pipeline {
         stage('Build Containers') {
             parallel {
                 stage('Build AggregatorService') {
-                    containerBuild('aggregatorService')
+                    steps {
+                        containerBuild('aggregatorService')
+                    }
                 }
                 stage('Build SupplementalService') {
                     steps {

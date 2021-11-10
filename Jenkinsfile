@@ -21,11 +21,11 @@ def generateBuildStage(list) {
             //     }
             // }
             stage("build-${list}") {
-                steps {
+                //steps {
                     container('kaniko') { 
                         sh '/kaniko/executor -c `pwd`/${list} --no-push'
                     }
-                }
+                //}
             }
         }
     }

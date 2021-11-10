@@ -27,6 +27,7 @@ pipeline {
                     create_containers(repositories)
                 }
                 container('kaniko') {
+                    sh "ls -a"
                     sh "/kaniko/executor -f `pwd`/aggregatorService/Dockerfile --no-push"
                 }
             }
@@ -36,6 +37,7 @@ pipeline {
 
 def create_containers(list) {
     for (i in list) {
-        println "Directory is ${i}"
+        //println "Directory is ${i}"
+        sh "ls ${i}"
     }
 }

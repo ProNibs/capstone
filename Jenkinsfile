@@ -7,10 +7,6 @@ def repositories = [
     'dashboard-web'
 ]
 
-def parallelBuildStagesMap = repositories.collectEntries {
-    ["${it}" : generateBuildStage(it)]
-}
-
 def generateBuildStage(list) {
     return {
         stage("build-${list}") {
@@ -33,6 +29,10 @@ def generateBuildStage(list) {
     }
 }
 
+def parallelBuildStagesMap = repositories.collectEntries {
+    ["${it}" : generateBuildStage(it)]
+}
+
 pipeline {
     agent any
     stages {
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 sh "echo HELLO WORLD!"
                 script {
-                    echo parallelBuildStagesMap
+                    echo "$parallelBuildStagesMap"
                     parallel parallelBuildStagesMap
                 }
             }

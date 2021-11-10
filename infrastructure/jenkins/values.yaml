@@ -4,16 +4,6 @@ controller:
       welcome-message: |
         jenkins:
           systemMessage: Welcome to Andrew's CI\CD server.  This Jenkins is configured and managed 'as code'. Top kek.
-          clouds:
-            - kubernetes:
-                templates:
-                  - name: "kaniko"
-                    label: "kaniko"
-                    containers:
-                    - name: "container-build-agent"  
-                      image: "gcr.io/kaniko-project/executor:debug"
-                      command: "/busybox/cat"
-                      tty: true
         jobs:
           - script: >
               pipelineJob('capstone') {

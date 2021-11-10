@@ -1,5 +1,5 @@
 // Create a list of the repos we have to loop over
-repositories = [
+def repositories = [
     'aggregatorService',
     'supplementalService',
     'dashboard-database',
@@ -7,37 +7,41 @@ repositories = [
     'dashboard-web'
 ]
 
-def create_containers(list) {
-    running_set = [:]
-    for (i in list) {
-        running_set["Build ${i}'s container"] = {
-            container('kaniko') { 
-                sh '/kaniko/executor -c `pwd`/${i} --no-push'
+def parallelBuildStagesMap = repositories.collectEntries {
+    ["${it}" : generateBuildStage(it)]
+}
+
+def generateBuildStage(list) {
+    return {
+        stage("build-${list}") {
+            agent {
+                kubernetes {
+                    containerTemplate {
+                        name 'kaniko'
+                        image 'gcr.io/kaniko-project/executor:debug'
+                        workingDir '/tmp/jenkins'
+                        ttyEnabled true
+                        command '/busybox/cat'
+                    }
+                }
+            }
+            steps {
+                container('kaniko') { 
+                    sh '/kaniko/executor -c `pwd`/${list} --no-push'
+                }
             }
         }
     }
-    return running_set
 }
 
 pipeline {
-    agent {
-        kubernetes {
-            containerTemplate {
-                name 'kaniko'
-                image 'gcr.io/kaniko-project/executor:debug'
-                workingDir '/tmp/jenkins'
-                ttyEnabled true
-                command '/busybox/cat'
-            }
-        }
-    }
+    agent any
     stages {
         stage('build') {
             steps {
                 sh "echo HELLO WORLD!"
                 script {
-                    echo create_containers(repositories)
-                    parallel(create_containers(repositories))
+                    parallel parallelBuildStagesMap
                 }
             }
         }

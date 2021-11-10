@@ -15,7 +15,7 @@ pipeline {
             steps {
                 sh "echo HELLO WORLD!"
                 container('kaniko') {
-                    sh "/kaniko/executor -f `pwd`/aggregatprService/Dockerfile --no-push"
+                    sh "/kaniko/executor -f `pwd`/aggregatorService/Dockerfile --no-push"
                 }
             }
         }

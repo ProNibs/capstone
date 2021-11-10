@@ -35,8 +35,6 @@ def parallelBuildStagesMap = repositories.collectEntries {
     ["${it}" : generateBuildStage(it)]
 }
 
-parallel generateBuildStage
-
 pipeline {
     agent {
         kubernetes {

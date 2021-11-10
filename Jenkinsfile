@@ -39,7 +39,7 @@ pipeline {
             steps {
                 sh "echo HELLO WORLD!"
                 script {
-                    echo parallelBuildStagesMap
+                    echo parallelBuildStagesMap.toString()
                     //parallel parallelBuildStagesMap
                 }
             }

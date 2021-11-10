@@ -7,9 +7,9 @@ def repositories = [
     'dashboard-web'
 ]
 
-def containerBuild(list) = {
-    sh '/kaniko/executor -c `pwd`/${list} --no-push'
-}
+// def containerBuild(list) = {
+//     sh '/kaniko/executor -c `pwd`/${list} --no-push'
+// }
 
 
 
@@ -30,9 +30,7 @@ pipeline {
                 stage('Build AggregatorService') {
                     steps {
                         container('kaniko') { 
-                            script {
-                                containerBuild('aggregatorService')
-                            }
+                            sh '/kaniko/executor -c `pwd`/${aggregatorService} --no-push'
                         }
                     }
                 }
@@ -40,7 +38,7 @@ pipeline {
                     steps {
                         container('kaniko') {    
                             script {
-                                containerBuild('supplementalService')
+                                sh '/kaniko/executor -c `pwd`/${supplementalService} --no-push'
                             }
                         }
                     }

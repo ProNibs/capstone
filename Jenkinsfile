@@ -7,33 +7,13 @@ def repositories = [
     'dashboard-web'
 ]
 
-def generateBuildStage(list) {
-    return {
-        node {
-            // agent {
-            //     kubernetes {
-            //         containerTemplate {
-            //             name 'kaniko'
-            //             image 'gcr.io/kaniko-project/executor:debug'
-            //             ttyEnabled true
-            //             command '/busybox/cat'
-            //         }
-            //     }
-            // }
-            stage("build-${list}") {
-                //steps {
-                    container('kaniko') { 
-                        sh '/kaniko/executor -c `pwd`/${list} --no-push'
-                    }
-                //}
-            }
-        }
+def containerBuild(list) = {
+    container('kaniko') { 
+        sh '/kaniko/executor -c `pwd`/${list} --no-push'
     }
 }
 
-def parallelBuildStagesMap = repositories.collectEntries {
-    ["${it}" : generateBuildStage(it)]
-}
+
 
 pipeline {
     agent {
@@ -50,11 +30,18 @@ pipeline {
         stage('Build Containers') {
             steps {
                 sh "echo HELLO WORLD!"
-                script {
-                    //echo parallelBuildStagesMap.toString()
-                    parallel parallelBuildStagesMap
+                parallel {
+                    stage('Build AggregatorService') {
+                        script {
+                            containerBuild('aggregatorService')
+                        }
+                    }
+                    stage('Build SupplementalService') {
+                        script {
+                            containerBuild('supplementalService')
+                        }
+                    }
                 }
-            }
         }
     }
 }

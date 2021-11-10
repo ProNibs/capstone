@@ -39,8 +39,8 @@ pipeline {
             steps {
                 sh "echo HELLO WORLD!"
                 script {
-                    echo parallelBuildStagesMap()
-                    parallel parallelBuildStagesMap()
+                    echo parallelBuildStagesMap
+                    //parallel parallelBuildStagesMap
                 }
             }
         }

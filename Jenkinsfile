@@ -7,7 +7,7 @@ def repositories = [
     'dashboard-web'
 ]
 
-def containerBuild(list) = {
+def containerBuild(list) {
     container('kaniko') { 
         sh '/kaniko/executor -c `pwd`/${list} --no-push'
     }

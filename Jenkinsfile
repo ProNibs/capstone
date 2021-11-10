@@ -10,16 +10,16 @@ def repositories = [
 def generateBuildStage(list) {
     return {
         node {
-            agent {
-                kubernetes {
-                    containerTemplate {
-                        name 'kaniko'
-                        image 'gcr.io/kaniko-project/executor:debug'
-                        ttyEnabled true
-                        command '/busybox/cat'
-                    }
-                }
-            }
+            // agent {
+            //     kubernetes {
+            //         containerTemplate {
+            //             name 'kaniko'
+            //             image 'gcr.io/kaniko-project/executor:debug'
+            //             ttyEnabled true
+            //             command '/busybox/cat'
+            //         }
+            //     }
+            // }
             stage("build-${list}") {
                 steps {
                     container('kaniko') { 

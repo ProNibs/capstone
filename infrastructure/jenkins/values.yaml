@@ -11,7 +11,7 @@ controller:
                     label: "kaniko"
                     containers:
                     - name: "container-build-agent"  
-                      image: "gcr.io/kaniko-project/executor"
+                      image: "gcr.io/kaniko-project/executor:debug"
                       command: "/busybox/cat"
                       tty: true
         jobs:

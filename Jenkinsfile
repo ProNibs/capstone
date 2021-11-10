@@ -2,6 +2,8 @@ pipeline {
     agent {
         kubernetes {
             label 'kaniko'
+            cloud 'kubernetes'
+            inheritFrom 'kaniko'
         }
     }
     stages {

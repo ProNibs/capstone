@@ -4,8 +4,8 @@ pipeline {
             label 'kaniko'
             containerTemplate {
                 name 'kaniko'
-                image: 'gcr.io/kaniko-project/executor:debug'
-                ttyEnabled: true
+                image 'gcr.io/kaniko-project/executor:debug'
+                ttyEnabled true
                 command 'cat'
             }
         }

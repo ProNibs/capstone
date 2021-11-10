@@ -22,10 +22,10 @@ pipeline {
         stage('build') {
             steps {
                 sh "echo HELLO WORLD!"
-                container('kaniko', shell: '/busybox/sh') {
+                container('kaniko') {
                     create_containers(repositories)
                     sh "ls -a"
-                    sh "/kaniko/executor -c `pwd`/aggregatorService --no-push"
+                    sh '/kaniko/executor -c `pwd`/aggregatorService --no-push -v=debug'
                 }
             }
         }

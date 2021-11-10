@@ -53,6 +53,7 @@ controller:
   additionalPlugins:
     - github:1.34.1
     - job-dsl:1.78.1
+    - blueocean:1.25.1
   additionalExistingSecrets:
     - name: pronibs-pat
       keyName: password

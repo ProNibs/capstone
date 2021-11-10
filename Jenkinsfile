@@ -39,7 +39,7 @@ pipeline {
                 stage('Build SupplementalService') {
                     steps {
                         container('kaniko') {    
-                            sh '/kaniko/executor -c `pwd`/supplementalService --no-push'
+                            containerBuild('supplementalService')
                         }
                     }
                 }

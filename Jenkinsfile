@@ -29,6 +29,7 @@ pipeline {
             parallel {
                 stage('Build AggregatorService') {
                     steps {
+                        echo "Building AggregatorService container..."
                         container('kaniko') {
                             containerBuild('aggregatorService')
                         }
@@ -36,6 +37,7 @@ pipeline {
                 }
                 stage('Build SupplementalService') {
                     steps {
+                        echo "Building SupplementalService container..."
                         container('kaniko') {    
                             containerBuild('supplementalService')
                         }
@@ -43,6 +45,7 @@ pipeline {
                 }
                 stage('Build Dashboard-Database') {
                     steps {
+                        echo "Building Dashboard-Database container..."
                         container('kaniko') {    
                             containerBuild('dashboard-database')
                         }
@@ -50,6 +53,7 @@ pipeline {
                 }
                 stage('Build Dashboard-API') {
                     steps {
+                        echo "Building Dashboard-API container..."
                         container('kaniko') {    
                             containerBuild('dashboard-api')
                         }
@@ -57,6 +61,7 @@ pipeline {
                 }
                 stage('Build Dashboard-Web') {
                     steps {
+                        echo "Building Dashboard-Web container..."
                         container('kaniko') {    
                             containerBuild('dashboard-web')
                         }

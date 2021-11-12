@@ -12,12 +12,13 @@ helm repo update
 ```
 
 That's it, it's automatically tied to my capstone repo.
-Only sad part is I must manually build in Jenkins until I get a proper domain setup for it for Github to send webhooks at.
+Only sad part is I must manually click "build" in Jenkins until I get a proper domain setup for it for Github to send webhooks at.
 
 Login info:
 
 - username: admin
 - To get the password, run `kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/chart-admin-password && echo`
+
 # Optional: Setup Jenkins to pull from Github Organization
 
 ## Add GitHub PAT as a secret to Kubernetes
@@ -60,3 +61,9 @@ For the record, this is have been automated as code in the "JCasC" section of th
 
 Sadly, since this is a local Jenkins setup, we don't have a URL for Github to push webhooks to,
 but we're setup for that in the event that changes.
+
+## References
+
+- [Install Jenkins on Kuberentes](https://www.jenkins.io/doc/book/installing/kubernetes/)
+- [Kaniko with Kubernetes plugin](https://github.com/jenkinsci/kubernetes-plugin/blob/master/examples/kaniko.groovy)
+- [Jenkins Helm chart values](https://github.com/jenkinsci/helm-charts/blob/main/charts/jenkins/values.yaml)

@@ -14,13 +14,7 @@ def containerBuild(String inputName) {
 pipeline {
     agent {
         kubernetes {
-            containerTemplate {
-                name 'kaniko'
-                image 'gcr.io/kaniko-project/executor:v1.5.0-debug'
-                ttyEnabled true
-                command '/busybox/cat'
-
-            }
+            yamlFile 'infrastructure/jenkins/buildYamls/kaniko_pod.yaml'
         }
     }
     stages {
@@ -53,13 +47,7 @@ pipeline {
                 stage('Build Dashboard-API') {
                     agent {
                         kubernetes {
-                            containerTemplate {
-                                name 'kaniko'
-                                image 'gcr.io/kaniko-project/executor:v1.5.0-debug'
-                                ttyEnabled true
-                                command '/busybox/cat'
-
-                            }
+                            yamlFile 'infrastructure/jenkins/buildYamls/kaniko_pod.yaml'
                         }
                     }
                     steps {
@@ -73,13 +61,7 @@ pipeline {
                     // Get resource hogs their own pod
                     agent {
                         kubernetes {
-                            containerTemplate {
-                                name 'kaniko'
-                                image 'gcr.io/kaniko-project/executor:v1.5.0-debug'
-                                ttyEnabled true
-                                command '/busybox/cat'
-
-                            }
+                            yamlFile 'infrastructure/jenkins/buildYamls/kaniko_pod.yaml'
                         }
                     }
                     steps {

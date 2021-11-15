@@ -73,5 +73,15 @@ pipeline {
                 }
             }
         }
+        stage('Test Carvel Container') {
+            agent {
+                kubernetes {
+                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+                }
+            }
+            steps {
+                sh "kapp version"
+            }
+        }
     }
 }

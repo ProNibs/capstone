@@ -1,0 +1,10 @@
+metadata:
+  labels:
+    jenkins: carvel
+spec:
+  containers:
+  - name: carvel
+    image: k14s/image:latest
+    command:
+    - cat
+    tty: true

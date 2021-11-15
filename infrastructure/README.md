@@ -17,6 +17,25 @@ Of note is the fact that we'll need to initially `kubectl port-forward` until we
 
 Just follow the infrastructre/strigo/ README.md's instructions.
 
+## Setup Kapp-controller
+
+We need to setup a service account for Kapp-Controller to utilize after we install kapp-controller itself
+
+- `kapp deploy -a kc -f https://github.com/vmware-tanzu/carvel-kapp-controller/releases/latest/download/release.yml`
+- `kapp deploy -a default-cluster-rbac -f infrastructure/kapp-controller-sa/serviceAccount.yaml`
+
+## Setup Jenkins
+
+Can't just name the "app" jenkins as kapp will get confused, so labeling it as "jenkins.kapp" to avoid that conflict;
+otherwise, you'll get a `kapp disallowed labels` type of error.
+
+- `kubectl create ns jenkins`
+- If you're following the [Jenkins README](jenkins/README.md),
+you might be importing your GitHub Personal Access Token(s). Do that first!
+- `kapp deploy -a jenkins.kapp -f infrastructure/jenkins/app/`
+- You might see it fail, that's okay. Kapp is just dumb.
+    - Manually watch and verify via `kubectl get pods -n jenkins`
+- Grab your `~/.kube/config` file and upload it as a Jenkins credential.
 
 ## Jenkins Build Images
 

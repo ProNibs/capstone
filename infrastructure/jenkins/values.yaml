@@ -1,3 +1,6 @@
+renderHelmLabels: false
+#namespaceOverride: jenkins
+
 controller:
   JCasC:
     configScripts:

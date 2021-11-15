@@ -1,0 +1,32 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: jenkins-app
+  namespace: default
+spec:
+  serviceAccountName: default-cluster-sa
+  fetch:
+  - git:
+      url: https://github.com/pronibs/capstone.git
+      ref: origin/develop
+      subPath: infrastructure/jenkins
+  # - helmChart:
+  #     name: jenkins
+  #     repository:
+  #       url: https://charts.jenkins.io
+        #url: https://github.com/jenkinsci/helm-charts/tree/main/charts/jenkins
+  - git:
+      url: https://github.com/jenkinsci/helm-charts.git
+      ref: origin/main
+      subPath: charts/
+
+  template:
+  - helmTemplate:
+      name: jenkins
+      path: 1/jenkins/
+      namespace: jenkins
+      valuesFrom:
+      - path: 0/values.yaml
+
+  deploy:
+  - kapp: {}

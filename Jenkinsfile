@@ -85,6 +85,7 @@ pipeline {
             }
             steps {
                 container ('carvel') {
+                    sh "echo $KAPP_KUBECONFIG"
                     sh "kapp version"
                     sh "kapp deploy -y -a test -n default -f https://k8s.io/examples/pods/simple-pod.yaml"
                 }

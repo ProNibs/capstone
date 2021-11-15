@@ -83,7 +83,7 @@ pipeline {
             steps {
                 container ('carvel') {
                     sh "kapp version"
-                    sh "kapp deploy -y -a test -f https://k8s.io/examples/pods/simple-pod.yaml"
+                    sh "kapp deploy -y -a test -n default -f https://k8s.io/examples/pods/simple-pod.yaml"
                 }
             }
         }

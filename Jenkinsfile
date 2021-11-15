@@ -80,6 +80,9 @@ pipeline {
                     yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
                 }
             }
+            environment {
+                KAPP_KUBECONFIG = credentials('kube-config-v2')
+            }
             steps {
                 container ('carvel') {
                     sh "kapp version"

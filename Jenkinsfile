@@ -19,6 +19,7 @@ pipeline {
     }
     stages {
         stage('Build Containers') {
+            when { branch 'master' }
             parallel {
                 stage('Build AggregatorService') {
                     steps {

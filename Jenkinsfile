@@ -81,7 +81,9 @@ pipeline {
                 }
             }
             steps {
-                sh "kapp version"
+                container ('carvel') {
+                    sh "kapp version"
+                }
             }
         }
     }

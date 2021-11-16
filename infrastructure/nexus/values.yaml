@@ -3,6 +3,6 @@ nexus:
     enabled: true
 ingress:
   enabled: true
-  tls:
-    secretName: false
+  #tls:
+    #secretName: false
   

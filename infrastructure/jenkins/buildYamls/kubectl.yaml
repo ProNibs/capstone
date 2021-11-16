@@ -1,9 +1,9 @@
 metadata:
   labels:
-    jenkins: kubectl
+    jenkins: kubectl_pod
 spec:
   containers:
-  - name: kubectl
+  - name: kubectl_container
     image: bitnami/kubectl:latest
     command:
     - cat

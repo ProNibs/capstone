@@ -19,7 +19,10 @@ pipeline {
     }
     stages {
         stage('Build Containers') {
-            when { branch 'master' }
+            when { 
+                beforeAgent true
+                branch 'master' 
+            }
             parallel {
                 stage('Build AggregatorService') {
                     steps {
@@ -84,7 +87,7 @@ pipeline {
                 KUBECONFIG = credentials('kube-config-v2')
             }
             steps {
-                container ('kubectl') {
+                container ('kubectl_container') {
                     sh "kubectl version"
                     sh "kubectl get nodes"
                     //sh "kapp deploy -y -a test -n default -f https://k8s.io/examples/pods/simple-pod.yaml"

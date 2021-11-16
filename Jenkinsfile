@@ -103,11 +103,11 @@ pipeline {
             }
             environment {
                 KAPP_KUBECONFIG = credentials('kube-config-v2')
-                KAPP_NAMESPACE = "default"
+                KAPP_NAMESPACE = 'default'
             }
             steps {
                 container ('carvel') {
-                    sh "kapp deploy -y -a metallb.kapp -f infrastructure/metallb/docker/"
+                    sh "kapp deploy -y -a metallb.kapp -f infrastructure/metallb/app/"
                 }
             }
         }

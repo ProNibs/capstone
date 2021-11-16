@@ -2,6 +2,7 @@ nexus:
   docker:
     enabled: true
 ingress:
+  enabled: true
   tls:
     secretName: false
   

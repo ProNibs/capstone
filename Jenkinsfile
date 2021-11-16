@@ -87,11 +87,10 @@ pipeline {
                 KUBECONFIG = credentials('kube-config-v2')
             }
             steps {
+                sh "kubectl version"
                 container ('kubectl-container') {
                     sh "kubectl version"
-                    sh "version"
-                    sh "get nodes"
-                    //sh "kapp deploy -y -a test -n default -f https://k8s.io/examples/pods/simple-pod.yaml"
+                    sh "kubectl get nodes"
                 }
             }
         }

@@ -77,24 +77,7 @@ pipeline {
                 }
             }
         }
-        stage('Test Kubectl Container') {
-            agent {
-                kubernetes {
-                    yamlFile 'infrastructure/jenkins/buildYamls/kubectl.yaml'
-                }
-            }
-            environment {
-                KUBECONFIG = credentials('kube-config-v2')
-            }
-            steps {
-                sh "echo $KUBECONFIG"
-                container ('kubectl-container') {
-                    sh "kubectl version"
-                    sh "kubectl get nodes"
-                }
-            }
-        }
-        stage('Test Carvel Container') {
+        stage('Create Required Namespaces with Carvel Container') {
             agent {
                 kubernetes {
                     yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
@@ -106,7 +89,7 @@ pipeline {
             steps {
                 container ('carvel') {
                     sh "kapp version"
-                    //sh "kapp deploy -y -a test -n default -f https://k8s.io/examples/pods/simple-pod.yaml"
+                    sh "kapp deploy -y -a namespaces -f infrastructure/namespaces/"
                 }
             }
         }

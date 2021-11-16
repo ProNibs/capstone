@@ -35,7 +35,16 @@ you might be importing your GitHub Personal Access Token(s). Do that first!
 - `kapp deploy -a jenkins.kapp -f infrastructure/jenkins/app/`
 - You might see it fail, that's okay. Kapp is just dumb.
     - Manually watch and verify via `kubectl get pods -n jenkins`
-- Grab your `~/.kube/config` file and upload it as a Jenkins credential.
+- Grab your `~/.kube/config` file for your cluster and make a copy of it
+- If you're deploying to the same K8s cluster you are running Jenkins from:
+    - Edit the `~/.kube/config-copy`'s clusters.cluster.server to be `server: https://kubernetes.default`
+    - This has jenkins use the internal kubeapi-server rather than going out to the Internet and back into the cluster
+- If you're deploying to a separate cluster than when you are running Jenkins from, you're done.
+- After making the kube config copy and editing it,
+go to the Jenkins UI and add a `secret file` credential with an ID of `kube-config-v2`.
+- You're done! That credential ID is automatically picked up by any steps in the Jenkinsfile using kapp and other carvel tools.
+
+
 
 ## Jenkins Build Images
 

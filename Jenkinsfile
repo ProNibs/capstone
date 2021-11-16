@@ -74,6 +74,23 @@ pipeline {
                 }
             }
         }
+        stage('Test Kubectl Container') {
+            agent {
+                kubernetes {
+                    yamlFile 'infrastructure/jenkins/buildYamls/kubectl.yaml'
+                }
+            }
+            environment {
+                KUBECONFIG = credentials('kube-config-v2')
+            }
+            steps {
+                container ('kubectl') {
+                    sh "kubectl version"
+                    sh "kubectl get nodes"
+                    //sh "kapp deploy -y -a test -n default -f https://k8s.io/examples/pods/simple-pod.yaml"
+                }
+            }
+        }
         stage('Test Carvel Container') {
             agent {
                 kubernetes {
@@ -85,9 +102,8 @@ pipeline {
             }
             steps {
                 container ('carvel') {
-                    sh "echo $KAPP_KUBECONFIG"
                     sh "kapp version"
-                    sh "kapp deploy -y -a test -n default -f https://k8s.io/examples/pods/simple-pod.yaml"
+                    //sh "kapp deploy -y -a test -n default -f https://k8s.io/examples/pods/simple-pod.yaml"
                 }
             }
         }

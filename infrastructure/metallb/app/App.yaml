@@ -11,17 +11,23 @@ spec:
       ref: origin/develop
       subPath: infrastructure/metallb
   - git:
-      url: https://github.com/bitnami/charts.git
-      ref: origin/master
-      subPath: bitnami/
+      url: https://github.com/metallb/metallb.git
+      ref: origin/main
+      subPath: manifests/
 
   template:
-  - helmTemplate:
-      name: metallb
-      path: 1/metallb/
-      namespace: metallb
-      valuesFrom:
-      - path: 0/values.yaml
+  # - helmTemplate:
+  #     name: metallb
+  #     path: 1/metallb/
+  #     namespace: metallb-system
+  #     valuesFrom:
+  #     - path: 0/values.yaml
+    - ytt:
+        paths:
+        - 1/metallb.yaml
+    - ytt:
+        paths:
+        - 0/k8s/
 
   deploy:
   - kapp: {}

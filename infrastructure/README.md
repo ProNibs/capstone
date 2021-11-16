@@ -44,7 +44,15 @@ you might be importing your GitHub Personal Access Token(s). Do that first!
 go to the Jenkins UI and add a `secret file` credential with an ID of `kube-config-v2`.
 - You're done! That credential ID is automatically picked up by any steps in the Jenkinsfile using kapp and other carvel tools.
 
+## Setup MetalLB Stuff
 
+I can't get Kubectl to run inside a pod sadly, so this just can't be 100% automated sadly.
+
+Follow the metallb [README](./metallb/README.md) for setup instructions.
+
+Anytime Strigo changes public IP addresses,
+you have to pray to the DNS Gods and cd into the metallb folder and run the `get_public_ips.sh` script.
+Takes Strigo's DNS names to resolve when they first boot.
 
 ## Jenkins Build Images
 

@@ -1,0 +1,32 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: harbor-app
+  namespace: default
+spec:
+  serviceAccountName: default-cluster-sa
+  fetch:
+  - git:
+      url: https://github.com/pronibs/capstone.git
+      ref: origin/develop
+      subPath: infrastructure/harbor
+  # - helmChart:
+  #     name: jenkins
+  #     repository:
+  #       url: https://charts.jenkins.io
+        #url: https://github.com/jenkinsci/helm-charts/tree/main/charts/jenkins
+  - git:
+      url: https://github.com/goharbor/harbor-helm.git
+      ref: origin/v1.8.0
+      #subPath: charts/
+
+  template:
+  - helmTemplate:
+      name: harbor
+      path: 1/
+      namespace: harbor
+      valuesFrom:
+      - path: 0/my_values.yaml
+
+  deploy:
+  - kapp: {}

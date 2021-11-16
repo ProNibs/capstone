@@ -1,0 +1,5 @@
+expose:
+  ingress:
+    annotations: {}
+  tls:
+    enabled: false

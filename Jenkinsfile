@@ -105,7 +105,7 @@ pipeline {
             }
             steps {
                 container ('carvel') {
-                    sh "kapp deploy -y -a metallb.kapp -f infrastructure/metallb/app/"
+                    sh "kapp deploy -y -a metallb.kapp -f infrastructure/metallb/docker/"
                 }
             }
         }

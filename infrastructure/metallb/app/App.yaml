@@ -1,0 +1,27 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: metallb-app
+  namespace: default
+spec:
+  serviceAccountName: default-cluster-sa
+  fetch:
+  - git:
+      url: https://github.com/pronibs/capstone.git
+      ref: origin/develop
+      subPath: infrastructure/metallb
+  - git:
+      url: https://github.com/metallb/metallb.git
+      ref: origin/main
+      subPath: charts/
+
+  template:
+  - helmTemplate:
+      name: metallb
+      path: 1/metallb/
+      namespace: metallb
+      valuesFrom:
+      - path: 0/values.yaml
+
+  deploy:
+  - kapp: {}

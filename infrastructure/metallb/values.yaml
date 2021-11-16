@@ -1,0 +1,6 @@
+configInline:
+  address-polls:
+    - name: default
+      protocol: layer2
+      addresses:
+      - 172.18.0.0/16

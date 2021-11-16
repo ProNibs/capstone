@@ -1,0 +1,32 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: ingress-nginx-app
+  namespace: default
+spec:
+  serviceAccountName: default-cluster-sa
+  fetch:
+  - git:
+      url: https://github.com/pronibs/capstone.git
+      ref: origin/develop
+      subPath: infrastructure/ingress
+  # - helmChart:
+  #     name: jenkins
+  #     repository:
+  #       url: https://charts.jenkins.io
+        #url: https://github.com/jenkinsci/helm-charts/tree/main/charts/jenkins
+  - git:
+      url: https://github.com/kubernetes/ingress-nginx.git
+      ref: origin/main
+      subPath: charts/
+
+  template:
+  - helmTemplate:
+      name: ingress-nginx
+      path: 1/ingress-nginx/
+      namespace: ingress-nginx
+      valuesFrom:
+      - path: 0/values.yaml
+
+  deploy:
+  - kapp: {}

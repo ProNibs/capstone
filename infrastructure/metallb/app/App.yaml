@@ -25,7 +25,7 @@ spec:
     - ytt:
         paths:
         - 1/metallb.yaml
-        - 0/k8s/
+        - 0/docker/
 
   deploy:
   - kapp: {}

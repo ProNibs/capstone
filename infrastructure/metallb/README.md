@@ -24,6 +24,7 @@
 
 - Update config.yaml to match what cidr returns from `docker network inspect -f '{{.IPAM.Config}}' kind`
 - Don't need to run `get_public_ips.sh` as this is static.
+- Update `app/App.yaml` to use `docker` folder as opposed to `k8s` folder.
 - Remember to double-check Strigo private IPs and adjust default back to proper /16 private IPs.
 
 ## References

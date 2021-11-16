@@ -1,5 +1,13 @@
 expose:
   ingress:
-    annotations: {}
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
   tls:
     enabled: false
+
+# Kapp handling charts for me, so opting out of this since I can
+chartmuseum:
+  enabled: false
+trivy:
+  insecure: true

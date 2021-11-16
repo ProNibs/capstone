@@ -1,0 +1,32 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: nexus-app
+  namespace: default
+spec:
+  serviceAccountName: default-cluster-sa
+  fetch:
+  - git:
+      url: https://github.com/pronibs/capstone.git
+      ref: origin/develop
+      subPath: infrastructure/nexus
+  # - helmChart:
+  #     name: jenkins
+  #     repository:
+  #       url: https://charts.jenkins.io
+        #url: https://github.com/jenkinsci/helm-charts/tree/main/charts/jenkins
+  - git:
+      url: https://github.com/sonatype/helm3-charts.git
+      ref: origin/main
+      subPath: charts/
+
+  template:
+  - helmTemplate:
+      name: nexus-repository-manager
+      path: 1/nexus-repository-manager/
+      namespace: nexus
+      valuesFrom:
+      - path: 0/values.yaml
+
+  deploy:
+  - kapp: {}

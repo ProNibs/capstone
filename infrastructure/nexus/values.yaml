@@ -1,0 +1,7 @@
+nexus:
+  docker:
+    enabled: true
+ingress:
+  tls:
+    secretName: false
+  

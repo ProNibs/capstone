@@ -4,9 +4,3 @@ configInline:
       protocol: layer2
       addresses:
       - 172.18.0.0/16
-speaker:
-  image:
-    tag: latest
-controller:
-  image:
-    tag: latest

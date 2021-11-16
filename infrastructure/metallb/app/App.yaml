@@ -11,9 +11,9 @@ spec:
       ref: origin/develop
       subPath: infrastructure/metallb
   - git:
-      url: https://github.com/metallb/metallb.git
-      ref: origin/main
-      subPath: charts/
+      url: https://github.com/bitnami/charts.git
+      ref: origin/master
+      subPath: bitnami/
 
   template:
   - helmTemplate:

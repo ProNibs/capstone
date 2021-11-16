@@ -3,6 +3,8 @@ nexus:
     enabled: true
 ingress:
   enabled: true
+  hostRepo: "*"
+  hostPath: /nexus
   #tls:
     #secretName: false
   

@@ -89,7 +89,8 @@ pipeline {
             steps {
                 container ('kubectl-container') {
                     sh "kubectl version"
-                    sh "kubectl get nodes"
+                    sh "version"
+                    sh "get nodes"
                     //sh "kapp deploy -y -a test -n default -f https://k8s.io/examples/pods/simple-pod.yaml"
                 }
             }

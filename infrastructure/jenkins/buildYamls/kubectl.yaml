@@ -5,6 +5,6 @@ spec:
   containers:
   - name: kubectl-container
     image: bitnami/kubectl:latest
-    command:
-    - cat
+    #command:
+    #- cat
     tty: true

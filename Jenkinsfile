@@ -87,7 +87,7 @@ pipeline {
                 KUBECONFIG = credentials('kube-config-v2')
             }
             steps {
-                sh "kubectl version"
+                sh "echo $KUBECONFIG"
                 container ('kubectl-container') {
                     sh "kubectl version"
                     sh "kubectl get nodes"

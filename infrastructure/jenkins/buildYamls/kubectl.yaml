@@ -3,7 +3,7 @@ metadata:
     jenkins: kubectl_pod
 spec:
   containers:
-  - name: kubectl_container
+  - name: kubectl-container
     image: bitnami/kubectl:latest
     command:
     - cat

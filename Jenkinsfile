@@ -85,6 +85,7 @@ pipeline {
             }
             environment {
                 KAPP_KUBECONFIG = credentials('kube-config-v2')
+                KAPP_NAMESPACE = "default"
             }
             steps {
                 container ('carvel') {
@@ -102,6 +103,7 @@ pipeline {
             }
             environment {
                 KAPP_KUBECONFIG = credentials('kube-config-v2')
+                KAPP_NAMESPACE = "default"
             }
             steps {
                 container ('carvel') {

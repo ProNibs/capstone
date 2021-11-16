@@ -6,5 +6,5 @@ spec:
   - name: kubectl
     image: bitnami/kubectl:latest
     command:
-    - cat
+    - sleep 99h
     tty: true

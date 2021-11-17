@@ -3,7 +3,8 @@ nexus:
     enabled: true
 ingress:
   enabled: true
-  hostRepo: "*"
+  # Can't just use "", it'll just place it as raw string lolz
+  hostRepo: '"*"'
   hostPath: /
   #tls:
     #secretName: false

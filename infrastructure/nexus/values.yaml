@@ -12,6 +12,6 @@ ingress:
     kubernetes.io/ingress.class: nginx
   hostRepo: localhost:8081
   hostPath: /nexus/
-  #tls:
-    #secretName: false
+  tls:
+    secretName: false
   

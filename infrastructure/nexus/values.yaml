@@ -2,7 +2,7 @@ nexus:
   docker:
     enabled: true
     registries:
-      - host: localhost
+      - host: "localhost"
         port: 5000
         secretName: registrySecret
 ingress:
@@ -17,6 +17,6 @@ ingress:
   tls:
     - secretName: nexusSecret
       hosts:
-        - nexus.local
-        - localhost
+        - "nexus.local"
+        - "localhost"
   

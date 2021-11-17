@@ -15,7 +15,7 @@ ingress:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
     cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
   hostRepo: localhost
-  hostPath: /nexus/
+  hostPath: /nexus(/|$)(.*)
   tls:
     - secretName: nexus-local-tls
       hosts:

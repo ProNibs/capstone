@@ -9,7 +9,7 @@ ingress:
   # Can't just use "", it'll just place it as raw string lolz
   #hostRepo: '"*."'
   hostRepo: localhost
-  hostPath: /nexus
+  hostPath: /nexus/
   #tls:
     #secretName: false
   

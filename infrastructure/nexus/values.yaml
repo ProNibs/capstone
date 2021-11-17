@@ -8,7 +8,9 @@ ingress:
   enabled: true
   # Can't just use "", it'll just place it as raw string lolz
   #hostRepo: '"*."'
-  hostRepo: localhost
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hostRepo: localhost:8081
   hostPath: /nexus/
   #tls:
     #secretName: false

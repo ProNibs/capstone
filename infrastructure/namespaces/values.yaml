@@ -23,3 +23,8 @@ kind: Namespace
 metadata:
   name:  rook
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  cert-manager
+---

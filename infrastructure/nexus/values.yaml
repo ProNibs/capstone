@@ -4,6 +4,7 @@ nexus:
     registries:
       - host: localhost
         port: 5000
+        #secretName: registrySecret
 ingress:
   enabled: true
   # Can't just use "", it'll just place it as raw string lolz

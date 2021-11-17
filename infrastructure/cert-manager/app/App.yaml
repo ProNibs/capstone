@@ -1,0 +1,27 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: cert-manager-app
+  namespace: default
+spec:
+  serviceAccountName: default-cluster-sa
+  fetch:
+  - git:
+      url: https://github.com/pronibs/capstone.git
+      ref: origin/develop
+      subPath: infrastructure/cert-manager
+  - git:
+      url: https://github.com/jetstack/cert-manager.git
+      ref: origin/release-1.7
+      subPath: deploy/charts/
+
+  template:
+  - helmTemplate:
+      name: cert-manager
+      path: 1/cert-manager/
+      namespace: cert-manager
+      valuesFrom:
+      - path: 0/values.yaml
+
+  deploy:
+  - kapp: {}

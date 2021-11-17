@@ -30,8 +30,10 @@ spec:
       - path: 0/values.yaml
   - ytt:
       ignoreUnknownComments: true
+      strict: false
       paths:
-      - 0/docker/data.yml
+      - "-"
+      - 0/docker/data.yaml
 
   deploy:
   - kapp:

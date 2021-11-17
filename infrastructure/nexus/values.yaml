@@ -1,6 +1,6 @@
 nexus:
   docker:
-    enabled: false
+    enabled: true
     registries:
       - host: localhost
         port: 5000
@@ -12,6 +12,6 @@ ingress:
     kubernetes.io/ingress.class: nginx
   hostRepo: nexus.local
   hostPath: /
-  #tls:
+  tls: []
   #  secretName: false
   

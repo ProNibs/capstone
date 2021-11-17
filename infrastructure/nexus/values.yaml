@@ -13,10 +13,9 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
   hostRepo: nexus.local
-  hostPath: /
+  hostPath: /nexus/
   tls:
     - secretName: nexus-local-tls
       hosts:
-        - "nexus.local"
         - "localhost"
   

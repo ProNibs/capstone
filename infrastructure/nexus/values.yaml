@@ -12,6 +12,7 @@ ingress:
   #kubernetes.io/ingress.class: nginx
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
     cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
   hostRepo: localhost
   hostPath: /nexus/

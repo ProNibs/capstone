@@ -4,5 +4,5 @@
 ---
 #@overlay/match-child-defaults missing_ok=True
 spec:
-  #@overlay/remove missing_ok=True
+  #@overlay/remove
   tls:

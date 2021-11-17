@@ -1,6 +1,6 @@
 #@ load("@ytt:overlay", "overlay")
 
-#@ overlay/match by=overlay.subset({"kind": "Ingress"})
+#@overlay/match by=overlay.subset({"kind": "Ingress"})
 ---
 spec:
   #@overlay/remove

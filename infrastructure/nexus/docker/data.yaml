@@ -1,7 +1,7 @@
 #@ load("@ytt:overlay", "overlay")
 
-#@overlay/match by=overlay.subset({"metadata": {"name":"nexus-repository-manager-docker-5000"}}), expects="1+"
+#@overlay/match by=overlay.subset({"metadata": {"name":"nexus-repository-manager-docker-5000"}}), missing_ok=True
 ---
 spec:
-  #@overlay/remove, missing_ok=True
+  #@overlay/remove
   tls:

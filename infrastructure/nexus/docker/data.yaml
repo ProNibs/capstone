@@ -3,5 +3,5 @@
 #@overlay/match by=overlay.subset({"kind": "Ingress"}), expects="1+"
 ---
 spec:
-  #@overlay/remove, missing_ok=True
+  #@overlay/remove missing_ok=True
   tls:

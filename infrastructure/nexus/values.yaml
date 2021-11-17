@@ -11,8 +11,9 @@ ingress:
   #hostRepo: '"*."'
   #kubernetes.io/ingress.class: nginx
   annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
     cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
-  hostRepo: nexus.local
+  hostRepo: localhost
   hostPath: /nexus/
   tls:
     - secretName: nexus-local-tls

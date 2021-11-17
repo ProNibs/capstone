@@ -1,6 +1,6 @@
 #@ load("@ytt:overlay", "overlay")
 
-#@overlay/match by=overlay.subset({"kind": "Ingress"}), expects="0+", missing_ok=True
+#@overlay/match by=overlay.subset({"metadata": {"name":"nexus-repository-manager-docker-5000"}}), expects="1+"
 ---
 spec:
   #@overlay/remove

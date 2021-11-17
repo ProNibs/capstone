@@ -15,5 +15,8 @@ ingress:
   hostRepo: nexus.local
   hostPath: /
   tls:
-    secretName: nexusSecret
+    - secretName: nexusSecret
+      hosts:
+        - nexus.local
+        - localhost
   

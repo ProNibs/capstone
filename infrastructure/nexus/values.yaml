@@ -10,7 +10,7 @@ ingress:
   #hostRepo: '"*."'
   annotations:
     kubernetes.io/ingress.class: nginx
-  hostRepo: nexus
+  hostRepo: nexus.demo
   hostPath: /
   tls:
     secretName: false

@@ -3,5 +3,5 @@
 #@overlay/match by=overlay.subset({"metadata": {"name":"nexus-repository-manager-docker-5000"}}), expects="1+"
 ---
 spec:
-  #@overlay/remove
+  #@overlay/remove, missing_ok=True
   tls:

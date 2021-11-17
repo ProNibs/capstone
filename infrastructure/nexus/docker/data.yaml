@@ -3,6 +3,8 @@
 #@overlay/match by=overlay.subset({"kind": "Ingress"}), expects="0+"
 ---
 #@overlay/match-child-defaults missing_ok=True
-spec:
-  #@overlay/remove
-  tls:
+metadata:
+  annotations:
+    #@overlay/remove
+    nginx.ingress.kubernetes.io/rewrite-target:
+  

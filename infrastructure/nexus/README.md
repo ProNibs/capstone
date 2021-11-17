@@ -1,3 +1,10 @@
+
+
+## Login to Nexus
+
+Get the Nexus password via `kubectl exec -n nexus -it svc/nexus-repository-manager -- cat /nexus-data/admin.password && echo`
+Username is `admin`.
+
 ## References
 
 - https://help.sonatype.com/repomanager3/installation/configuring-the-runtime-environment

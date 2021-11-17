@@ -4,6 +4,7 @@ metadata:
   name: nexus-app
   namespace: default
 spec:
+  syncPeriod: 1m
   serviceAccountName: default-cluster-sa
   fetch:
   - git:
@@ -27,6 +28,10 @@ spec:
       namespace: nexus
       valuesFrom:
       - path: 0/values.yaml
+  - ytt:
+      ignoreUnknownComments: true
+      paths:
+      - 0/docker/data.yml
 
   deploy:
   - kapp:

@@ -1,7 +1,7 @@
 #@ load("@ytt:overlay", "overlay")
 
-#@overlay/match by=overlay.subset({"kind": "Ingress"}), expects="0+"
+#@overlay/match by=overlay.subset({"kind": "Ingress"}), expects="0+", missing_ok=True
 ---
 spec:
-  #@overlay/remove, missing_ok=True
+  #@overlay/remove
   tls:

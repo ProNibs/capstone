@@ -1,6 +1,6 @@
 nexus:
   docker:
-    enabled: true
+    enabled: false
     registries:
       - host: localhost
         port: 5000

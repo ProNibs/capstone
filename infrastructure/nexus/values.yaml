@@ -4,7 +4,7 @@ nexus:
 ingress:
   enabled: true
   hostRepo: "*"
-  hostPath: /nexus
+  hostPath: /
   #tls:
     #secretName: false
   

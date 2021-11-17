@@ -29,4 +29,6 @@ spec:
       - path: 0/values.yaml
 
   deploy:
-  - kapp: {}
+  - kapp:
+      # Helm chart doesn't allow setting namespace for some dumb reason
+      intoNs: nexus

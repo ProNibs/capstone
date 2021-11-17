@@ -15,7 +15,7 @@ Of note is the fact that we'll need to initially `kubectl port-forward` until we
 
 ## Setup Strigo
 
-Just follow the infrastructre/strigo/ README.md's instructions.
+Just follow the [strigo README](infrastructure/strigo/README.md) instructions.
 
 ## Setup Kapp-controller
 
@@ -60,5 +60,3 @@ Takes Strigo's DNS names to resolve when they first boot.
     - gcr.io/kaniko-project/executor:v1.5.0-debug
 - For deploying stuff via kapp (from dockerhub, I know...)
     - k14s/image
-    - If it needs helm installed, will need to swap to:
-        - k14s/kapp-controller

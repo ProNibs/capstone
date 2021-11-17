@@ -10,10 +10,8 @@ spec:
       url: https://github.com/pronibs/capstone.git
       ref: origin/develop
       subPath: infrastructure/cert-manager
-  - git:
-      url: https://github.com/jetstack/cert-manager.git
-      ref: origin/release-1.7
-      subPath: deploy/charts/
+  - http:
+      url: https://github.com/jetstack/cert-manager/releases/download/v1.6.0/cert-manager.yaml
 
   template:
   - helmTemplate:

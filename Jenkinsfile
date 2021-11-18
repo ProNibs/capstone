@@ -144,7 +144,7 @@ pipeline {
                         echo "Building AggregatorService container..."
                         container('kaniko') {
                             sh "ls"
-                            sh "ls /kaniko/.docker"
+                            sh "ls /kaniko/.docker/"
                             containerBuild('aggregatorService')
                         }
                     }

@@ -11,7 +11,7 @@ def containerBuild(String inputName) {
     //sh "mkdir -p /kaniko/.docker"
     //sh '''echo "{\"auths\":{\"harbor.127.0.0.1.nip.io:8443\":{\"auth\":\"$(printf "%s:%s" "admin" "Harbor12345" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json'''
     sh "/kaniko/executor -c `pwd`/${inputName} --insecure --skip-tls-verify \
-        --destination harbor.127.0.0.1.nip.io:8443/my-repo/${inputName.toLowerCase()}:latest"
+        --destination my-harbor-registry.harbor/my-repo/${inputName.toLowerCase()}:latest"
         //--destination=harbor.127.0.0.1.nip.io/my-repo/${inputName.toLowerCase()}:${BUILD_NUMBER}"
 }
 

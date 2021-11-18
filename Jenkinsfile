@@ -8,8 +8,8 @@ def repositories = [
 ]
 
 def containerBuild(String inputName) {
-    sh "/kaniko/executor -c `pwd`/${inputName} --insecure --skip-tls-verify --cache --destination my-harbor-core.harbor/my-repo/${inputName.toLowerCase()}:latest"
-    sh "/kaniko/executor -c `pwd`/${inputName} --insecure --skip-tls-verify --cache --destination my-harbor-core.harbor/my-repo/${inputName.toLowerCase()}:${BUILD_NUMBER}"
+    sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify --cache --destination harbor.127.0.0.1.nip.io:8443/my-repo/${inputName.toLowerCase()}:latest"
+    sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify --cache --destination harbor.127.0.0.1.nip.io:8443/my-repo/${inputName.toLowerCase()}:${BUILD_NUMBER}"
 }
 
 pipeline {
@@ -118,16 +118,16 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Harbor Check') {
-            agent none
-            input {
-                message "Did you create a Harbor project named 'my-repo' accessible at harbor.127.0.0.1.nip.io:8443?"
-                ok "Okay, time to create containers then!"
-            }
-            steps {
-                echo "Confirmed Harbor Repo exists."
-            }
-        }
+        // stage('Harbor Check') {
+        //     agent none
+        //     input {
+        //         message "Did you create a Harbor project named 'my-repo' accessible at harbor.127.0.0.1.nip.io:8443?"
+        //         ok "Okay, time to create containers then!"
+        //     }
+        //     steps {
+        //         echo "Confirmed Harbor Repo exists."
+        //     }
+        // }
         stage('Build Containers') {
             // when { 
             //     beforeAgent true

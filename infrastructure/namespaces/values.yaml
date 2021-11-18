@@ -16,4 +16,20 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name:  rook
+  name:  dashboard-web
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  dashboard-api
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  aggregator-service
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  supplemental-service
+---

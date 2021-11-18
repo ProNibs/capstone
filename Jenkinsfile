@@ -45,7 +45,7 @@ pipeline {
                 }
             }
         }
-            This stage is redundant, but w/e bro
+        // This stage is redundant, but w/e bro
         stage('Install Kapp-Controller') {
             agent {
                 kubernetes {

@@ -8,8 +8,8 @@ def repositories = [
 ]
 
 def containerBuild(String inputName) {
-    sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify --cache --destination=harbor.127.0.0.1.nip.io:8443/my-repo/${inputName}:latest"
-    sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify --cache --destination=harbor.127.0.0.1.nip.io:8443/my-repo/${inputName}:${BUILD_NUMBER}"
+    sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify --cache --destination harbor.127.0.0.1.nip.io:8443/my-repo/${inputName}:latest"
+    sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify --cache --destination harbor.127.0.0.1.nip.io:8443/my-repo/${inputName}:${BUILD_NUMBER}"
 }
 
 pipeline {
@@ -19,105 +19,105 @@ pipeline {
         }
     }
     stages {
-        stage('Create Required Namespaces with Carvel Container') {
-            agent {
-                kubernetes {
-                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
-                }
-            }
-            environment {
-                KAPP_KUBECONFIG = credentials('kube-config-v2')
-                KAPP_NAMESPACE = "default"
-            }
-            steps {
-                container ('carvel') {
-                    sh "kapp version"
-                    sh "kapp deploy -y -a namespaces -f infrastructure/namespaces/"
-                }
-            }
-        }
-        stage('Install Kapp-Controller') {
-            agent {
-                kubernetes {
-                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
-                }
-            }
-            environment {
-                KAPP_KUBECONFIG = credentials('kube-config-v2')
-                KAPP_NAMESPACE = 'default'
-            }
-            steps {
-                container ('carvel') {
-                    sh "kapp deploy -y -a kc -f https://github.com/vmware-tanzu/carvel-kapp-controller/releases/latest/download/release.yml"
-                    sh "kapp deploy -y -a default-cluster-rbac -f infrastructure/kapp-controller-sa/serviceAccount.yaml"
-                }
-            }
-        }
-        stage('Install Metallb') {
-            agent {
-                kubernetes {
-                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
-                }
-            }
-            environment {
-                KAPP_KUBECONFIG = credentials('kube-config-v2')
-                KAPP_NAMESPACE = 'default'
-            }
-            steps {
-                container ('carvel') {
-                    sh "kapp deploy -y -a metallb.kapp -f infrastructure/metallb/app/"
-                }
-            }
-        }
-        stage('Install Ingress-Nginx') {
-            agent {
-                kubernetes {
-                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
-                }
-            }
-            environment {
-                KAPP_KUBECONFIG = credentials('kube-config-v2')
-                KAPP_NAMESPACE = 'default'
-            }
-            steps {
-                container ('carvel') {
-                    sh "kapp deploy -y -a ingress.kapp -f infrastructure/ingress/app/"
-                }
-            }
-        }
-        stage('Install Cert-Manager') {
-            agent {
-                kubernetes {
-                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
-                }
-            }
-            environment {
-                KAPP_KUBECONFIG = credentials('kube-config-v2')
-                KAPP_NAMESPACE = 'default'
-            }
-            steps {
-                container ('carvel') {
-                    sh "kapp deploy -y -a cert-manager.kapp -f https://github.com/jetstack/cert-manager/releases/download/v1.6.0/cert-manager.yaml"
-                    sh "kapp deploy -y -a self-signed.kapp -f infrastructure/cert-manager/k8s/"
-                }
-            }
-        }
-        stage('Install Nexus') {
-            agent {
-                kubernetes {
-                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
-                }
-            }
-            environment {
-                KAPP_KUBECONFIG = credentials('kube-config-v2')
-                KAPP_NAMESPACE = 'default'
-            }
-            steps {
-                container ('carvel') {
-                    sh "echo Placeholder"
-                }
-            }
-        }
+        // stage('Create Required Namespaces with Carvel Container') {
+        //     agent {
+        //         kubernetes {
+        //             yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+        //         }
+        //     }
+        //     environment {
+        //         KAPP_KUBECONFIG = credentials('kube-config-v2')
+        //         KAPP_NAMESPACE = "default"
+        //     }
+        //     steps {
+        //         container ('carvel') {
+        //             sh "kapp version"
+        //             sh "kapp deploy -y -a namespaces -f infrastructure/namespaces/"
+        //         }
+        //     }
+        // }
+        // stage('Install Kapp-Controller') {
+        //     agent {
+        //         kubernetes {
+        //             yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+        //         }
+        //     }
+        //     environment {
+        //         KAPP_KUBECONFIG = credentials('kube-config-v2')
+        //         KAPP_NAMESPACE = 'default'
+        //     }
+        //     steps {
+        //         container ('carvel') {
+        //             sh "kapp deploy -y -a kc -f https://github.com/vmware-tanzu/carvel-kapp-controller/releases/latest/download/release.yml"
+        //             sh "kapp deploy -y -a default-cluster-rbac -f infrastructure/kapp-controller-sa/serviceAccount.yaml"
+        //         }
+        //     }
+        // }
+        // stage('Install Metallb') {
+        //     agent {
+        //         kubernetes {
+        //             yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+        //         }
+        //     }
+        //     environment {
+        //         KAPP_KUBECONFIG = credentials('kube-config-v2')
+        //         KAPP_NAMESPACE = 'default'
+        //     }
+        //     steps {
+        //         container ('carvel') {
+        //             sh "kapp deploy -y -a metallb.kapp -f infrastructure/metallb/app/"
+        //         }
+        //     }
+        // }
+        // stage('Install Ingress-Nginx') {
+        //     agent {
+        //         kubernetes {
+        //             yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+        //         }
+        //     }
+        //     environment {
+        //         KAPP_KUBECONFIG = credentials('kube-config-v2')
+        //         KAPP_NAMESPACE = 'default'
+        //     }
+        //     steps {
+        //         container ('carvel') {
+        //             sh "kapp deploy -y -a ingress.kapp -f infrastructure/ingress/app/"
+        //         }
+        //     }
+        // }
+        // stage('Install Cert-Manager') {
+        //     agent {
+        //         kubernetes {
+        //             yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+        //         }
+        //     }
+        //     environment {
+        //         KAPP_KUBECONFIG = credentials('kube-config-v2')
+        //         KAPP_NAMESPACE = 'default'
+        //     }
+        //     steps {
+        //         container ('carvel') {
+        //             sh "kapp deploy -y -a cert-manager.kapp -f https://github.com/jetstack/cert-manager/releases/download/v1.6.0/cert-manager.yaml"
+        //             sh "kapp deploy -y -a self-signed.kapp -f infrastructure/cert-manager/k8s/"
+        //         }
+        //     }
+        // }
+        // stage('Install Nexus') {
+        //     agent {
+        //         kubernetes {
+        //             yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+        //         }
+        //     }
+        //     environment {
+        //         KAPP_KUBECONFIG = credentials('kube-config-v2')
+        //         KAPP_NAMESPACE = 'default'
+        //     }
+        //     steps {
+        //         container ('carvel') {
+        //             sh "echo Placeholder"
+        //         }
+        //     }
+        // }
         stage('Harbor Check') {
             agent none
             input {

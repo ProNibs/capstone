@@ -1,10 +1,13 @@
-# expose:
-#   ingress:
-#     annotations:
-#       ingress.kubernetes.io/ssl-redirect: "false"
-#       nginx.ingress.kubernetes.io/ssl-redirect: "false"
+expose:
+  ingress:
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
 #   tls:
 #     enabled: false
+    hosts:
+      core: localhost
+externalURL: https://localhost
 
 # Kapp handling charts for me, so opting out of this since I can
 chartmuseum:

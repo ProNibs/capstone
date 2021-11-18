@@ -28,12 +28,12 @@ spec:
       namespace: nexus
       valuesFrom:
       - path: 0/values.yaml
-  # - ytt:
-  #     ignoreUnknownComments: true
-  #     strict: false
-  #     paths:
-  #     - "-"
-  #     - 0/docker/data.yaml
+  - ytt:
+      ignoreUnknownComments: true
+      strict: false
+      paths:
+      - "-"
+      - 0/docker/data.yaml
 
   deploy:
   - kapp:

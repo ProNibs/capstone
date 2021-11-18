@@ -13,7 +13,6 @@ def containerBuild(String inputName) {
     //sh "/kaniko/executor -c `pwd`/${inputName} --insecure --skip-tls-verify \
     //    --destination my-harbor-registry.harbor:5000/my-repo/${inputName.toLowerCase()}:latest"
         //--destination=harbor.127.0.0.1.nip.io/my-repo/${inputName.toLowerCase()}:${BUILD_NUMBER}"
-    sh "ls /kaniko/.docker"
     sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify \
         --destination jklhgfcm/my-private-repo:${inputName.toLowerCase()}.latest"
 }
@@ -144,6 +143,8 @@ pipeline {
                     steps {
                         echo "Building AggregatorService container..."
                         container('kaniko') {
+                            sh "ls"
+                            sh "ls /kaniko/.docker"
                             containerBuild('aggregatorService')
                         }
                     }

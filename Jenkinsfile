@@ -8,7 +8,8 @@ def repositories = [
 ]
 
 def containerBuild(String inputName) {
-    sh "/kaniko/executor -c `pwd`/${inputName} --no-push"
+    sh "/kaniko/executor -c `pwd`/${inputName} --insecure --destination=harbor.127.0.0.1.nip.io:8443/my-repo/${inputName}:latest"
+    sh "/kaniko/executor -c `pwd`/${inputName} --insecure --destination=harbor.127.0.0.1.nip.io:8443/my-repo/${inputName}:${BUILD_NUMBER}"
 }
 
 pipeline {
@@ -18,65 +19,6 @@ pipeline {
         }
     }
     stages {
-        stage('Build Containers') {
-            when { 
-                beforeAgent true
-                branch 'master' 
-            }
-            parallel {
-                stage('Build AggregatorService') {
-                    steps {
-                        echo "Building AggregatorService container..."
-                        container('kaniko') {
-                            containerBuild('aggregatorService')
-                        }
-                    }
-                }
-                stage('Build SupplementalService') {
-                    steps {
-                        echo "Building SupplementalService container..."
-                        container('kaniko') {    
-                            containerBuild('supplementalService')
-                        }
-                    }
-                }
-                stage('Build Dashboard-Database') {
-                    steps {
-                        echo "Building Dashboard-Database container..."
-                        container('kaniko') {    
-                            containerBuild('dashboard-database')
-                        }
-                    }
-                }
-                stage('Build Dashboard-API') {
-                    agent {
-                        kubernetes {
-                            yamlFile 'infrastructure/jenkins/buildYamls/kaniko_pod.yaml'
-                        }
-                    }
-                    steps {
-                        echo "Building Dashboard-API container..."
-                        container('kaniko') {    
-                            containerBuild('dashboard-api')
-                        }
-                    }
-                }
-                stage('Build Dashboard-Web') {
-                    // Get resource hogs their own pod
-                    agent {
-                        kubernetes {
-                            yamlFile 'infrastructure/jenkins/buildYamls/kaniko_pod.yaml'
-                        }
-                    }
-                    steps {
-                        echo "Building Dashboard-Web container..."
-                        container('kaniko') {    
-                            containerBuild('dashboard-web')
-                        }
-                    }
-                }
-            }
-        }
         stage('Create Required Namespaces with Carvel Container') {
             agent {
                 kubernetes {
@@ -176,6 +118,76 @@ pipeline {
                 }
             }
         }
+        stage('Harbor Check') {
+            agent none
+            input {
+                message "Did you create a Harbor project named 'my-repo' accessible at harbor.127.0.0.1.nip.io:8443?"
+                ok "Okay, time to create containers then!"
+            }
+            steps {
+                echo "Confirmed Harbor Repo exists."
+            }
+        }
+        stage('Build Containers') {
+            // when { 
+            //     beforeAgent true
+            //     branch 'master' 
+            // }
+            parallel {
+                stage('Build AggregatorService') {
+                    steps {
+                        echo "Building AggregatorService container..."
+                        container('kaniko') {
+                            containerBuild('aggregatorService')
+                        }
+                    }
+                }
+                // stage('Build SupplementalService') {
+                //     steps {
+                //         echo "Building SupplementalService container..."
+                //         container('kaniko') {    
+                //             containerBuild('supplementalService')
+                //         }
+                //     }
+                // }
+                // stage('Build Dashboard-Database') {
+                //     steps {
+                //         echo "Building Dashboard-Database container..."
+                //         container('kaniko') {    
+                //             containerBuild('dashboard-database')
+                //         }
+                //     }
+                // }
+                // stage('Build Dashboard-API') {
+                //     agent {
+                //         kubernetes {
+                //             yamlFile 'infrastructure/jenkins/buildYamls/kaniko_pod.yaml'
+                //         }
+                //     }
+                //     steps {
+                //         echo "Building Dashboard-API container..."
+                //         container('kaniko') {    
+                //             containerBuild('dashboard-api')
+                //         }
+                //     }
+                // }
+                // stage('Build Dashboard-Web') {
+                //     // Get resource hogs their own pod
+                //     agent {
+                //         kubernetes {
+                //             yamlFile 'infrastructure/jenkins/buildYamls/kaniko_pod.yaml'
+                //         }
+                //     }
+                //     steps {
+                //         echo "Building Dashboard-Web container..."
+                //         container('kaniko') {    
+                //             containerBuild('dashboard-web')
+                //         }
+                //     }
+                // }
+            }
+        }
+
     }
 }
 

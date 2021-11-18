@@ -15,7 +15,7 @@ def containerBuild(String inputName) {
         //--destination=harbor.127.0.0.1.nip.io/my-repo/${inputName.toLowerCase()}:${BUILD_NUMBER}"
 
     sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify \
-        --destination jklhgfcm/my-private-repo:${inputName.toLowerCase()}-latest"
+        --destination jklhgfcm/my-private-repo:${inputName.toLowerCase()}.latest"
 }
 
 pipeline {

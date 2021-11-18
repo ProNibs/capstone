@@ -8,7 +8,7 @@ spec:
     command:
     - cat
     tty: true
-    volumeMount:
+    volumeMounts:
       - name: jenkins-docker-cfg
         mountPath: /kaniko/.docker
   volumes:

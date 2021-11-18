@@ -8,9 +8,10 @@ def repositories = [
 ]
 
 def containerBuild(String inputName) {
+    sh "ls /kaniko/.docker/"
     sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify \
-       --destination harbor.127.0.0.1.nip.io:8443/my-repo/${inputName.toLowerCase()}:latest \
-       --destination harbor.127.0.0.1.nip.io/my-repo/${inputName.toLowerCase()}:${BUILD_NUMBER}"
+       --destination harbor.127.0.0.1.nip.io:8443/my-repo/${inputName.toLowerCase()}:latest"
+       //--destination harbor.127.0.0.1.nip.io/my-repo/${inputName.toLowerCase()}:${BUILD_NUMBER}"
     
     // This works for Dockerhub if we need that
     // sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify \
@@ -41,6 +42,7 @@ pipeline {
         //         }
         //     }
         // }
+            // This stage is redundant, but w/e bro
         // stage('Install Kapp-Controller') {
         //     agent {
         //         kubernetes {

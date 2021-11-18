@@ -2,11 +2,6 @@
 
 kubectl create ns harbor
 kubectl apply -f infrastructure/harbor/my_service.yaml
-kubectl create secret docker-registry regcred \
-    --docker-server=https://harbor.127.0.0.1.nip.io:8443 \
-    --docker-username=admin \
-    --docker-password=Harbor12345 \
-    -n jenkins
 
 helm repo add harbor https://helm.goharbor.io  
 

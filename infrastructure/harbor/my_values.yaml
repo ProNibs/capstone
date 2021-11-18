@@ -15,3 +15,5 @@ chartmuseum:
   enabled: false
 # trivy:
 #   insecure: true
+# internalTLS:
+#   enabled: true

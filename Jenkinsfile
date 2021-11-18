@@ -13,8 +13,8 @@ def containerBuild(String inputName) {
     sh "/kaniko/executor -c `pwd`/${inputName} --cache --skip-tls-verify \
        --destination harbor.127.0.0.1.nip.io:8443/my-repo/${inputName.toLowerCase()}:latest"
     // Need to split up; otherwise, it'll timeout from taking forever
-    sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify \
-       --destination harbor.127.0.0.1.nip.io/my-repo/${inputName.toLowerCase()}:${BUILD_NUMBER}"
+    // sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify \
+    //    --destination harbor.127.0.0.1.nip.io/my-repo/${inputName.toLowerCase()}:${BUILD_NUMBER}"
     
     // This works for Dockerhub if we need that
     // sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify \

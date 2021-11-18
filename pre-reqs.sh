@@ -26,5 +26,3 @@ echo "Remember to create a jenkins secret file with ID=kube-config-v2 based on ~
 # Get Jenkins admin password
 echo "Jenkins Password:" 
 kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/chart-admin-password && echo
-
-

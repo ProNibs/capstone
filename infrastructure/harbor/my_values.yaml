@@ -6,8 +6,9 @@ expose:
 #   tls:
 #     enabled: false
     hosts:
-      core: localhost
-externalURL: https://localhost
+      core: harbor.127.0.0.1.nip.io
+      notary: notary.127.0.0.1.n.ip.io
+externalURL: https://harbor.127.0.0.1.nip.io
 
 # Kapp handling charts for me, so opting out of this since I can
 chartmuseum:

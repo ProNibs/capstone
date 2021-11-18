@@ -9,8 +9,8 @@ def repositories = [
 
 def containerBuild(String inputName) {
     sh "/kaniko/executor -c `pwd`/${inputName} --insecure --skip-tls-verify \
-        --destination 'my-harbor-core.harbor.cluster.local/my-repo/${inputName.toLowerCase()}:latest' \
-        --destination 'my-harbor-core.harbor.cluster.local/my-repo/${inputName.toLowerCase()}:${BUILD_NUMBER}'"
+        --destination 'my-harbor-core.harbor/my-repo/${inputName.toLowerCase()}:latest' \
+        --destination 'my-harbor-core.harbor/my-repo/${inputName.toLowerCase()}:${BUILD_NUMBER}'"
 }
 
 pipeline {

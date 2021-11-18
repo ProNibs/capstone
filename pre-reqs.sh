@@ -20,8 +20,13 @@ sed -E 's/127.0.0.1:[0-9]+/kubernetes.default/g' ~/.kube/config > ~/.kube/config
 # Only needs to be done last night
 #cd nip.io && source ./build_and_run_docker.sh
 
-# Reminder for next steps
+# Assuming nip.io is up and running, install Harbor
+# Cannot install via kapp-controller because the helm chart uses a built-in function htpasswd, lolz
+source ./infrastructure/harbor/pre-reqs.sh
+
+# Reminders for next steps
 echo "Remember to create a jenkins secret file with ID=kube-config-v2 based on ~/.kube/config-test"
+echo "Remember to create a project in Harbor as well, Password for Harbor is 'Harbor12345'"
 
 # Get Jenkins admin password
 echo "Jenkins Password:" 

@@ -1,14 +1,14 @@
 expose:
   ingress:
     annotations:
-      ingress.kubernetes.io/ssl-redirect: "false"
-      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      #ingress.kubernetes.io/ssl-redirect: "false"
+      #nginx.ingress.kubernetes.io/ssl-redirect: "false"
 #   tls:
 #     enabled: false
     hosts:
       core: harbor.127.0.0.1.nip.io
       notary: notary.127.0.0.1.n.ip.io
-externalURL: https://harbor.127.0.0.1.nip.io
+externalURL: https://harbor.127.0.0.1.nip.io:8443
 
 # Kapp handling charts for me, so opting out of this since I can
 chartmuseum:

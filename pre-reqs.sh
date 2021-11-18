@@ -26,7 +26,7 @@ source ./infrastructure/harbor/pre-reqs.sh
 
 # Reminders for next steps
 echo "Remember to create a jenkins secret file with ID=kube-config-v2 based on ~/.kube/config-test"
-echo "Remember to create a project in Harbor as well, Password for Harbor is 'Harbor12345'"
+echo "Remember to create a project named 'my-repo' in Harbor as well, Password for Harbor is 'Harbor12345'"
 
 # Get Jenkins admin password
 echo "Jenkins Password:" 

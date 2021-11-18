@@ -244,3 +244,47 @@ The way I implemented it means there is no "dev" instance of this, only "prod".
 ## Configure and Run Jenkins
 
 From here on out, things get interesting.
+
+## Run Pre-reqs.sh
+
+`./pre-reqs.sh`
+
+The script does the following:
+
+- Install Kapp-Controller
+- Prepare a secret `memberlist` and cofigure kubelet with `strictARP: true` for MetalLB
+- Create Jenkins Namespace and Install Jenkins
+- Create ~/.kube/config-test for usage inside Jenkins
+- Install Harbor and credentials
+
+## After Pre-Reqs
+
+- Upload `~/.kube/config-test` as a secret file in Jenkins
+- Configure harbor's nip.io domain name to be forwarded to appropriate k8s service internally
+    - `kubectl edit cm/coredns -n kube-system`
+    - Above the line `cache 30`, add the following line:
+    ```
+        rewrite name harbor.127.0.0.1.nip.io my-service.harbor.svc.cluster.local
+    ```
+
+## After the "After Pre-Reqs"
+
+In a separate terminal, run `kubectl port-forward svc/jenkins -n jenkins 8081:8080`.
+Go to https://jenkins.127.0.0.1:8081 to browse the Jenkins UI.
+
+Click the `capstone` project and click `Build Now`.
+
+Watch the magic as the pipeline runs!
+
+## After Jenkins Build
+
+Hopefully, you have a properly populated cluster now with the following installed:
+
+- Metallb
+- Ingress-nginx
+- cert-manager
+- Containers for the moisture farm were made
+- Moisture farm apps were deployed in k8s
+
+To access items via ingress:
+`kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 8080:80 8443:443`

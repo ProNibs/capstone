@@ -1,8 +1,16 @@
 #!/bin/zsh
 
 kubectl create ns harbor
+# Create my-service to proxy my-harbor-core's pod on port 8443
 kubectl apply -f infrastructure/harbor/my_service.yaml
-
+# Create credential for kaniko to use to push images up
+kubectl create secret docker-registry harborcred \
+    --docker-server=https://harbor.127.0.0.1.nip.io:8443 \
+    --docker-username=admin \
+    --docker-password=Harbor12345 \
+    --docker-email=andrewsgraham1995@gmail.com \
+    -n jenkins
+    
 helm repo add harbor https://helm.goharbor.io  
 
 echo "Installing Harbor..."

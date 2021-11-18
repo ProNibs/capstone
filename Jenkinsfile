@@ -160,7 +160,7 @@ pipeline {
                 }
             }
         }
-        stage('Install Harbor') {
+        stage('Install Nexus') {
             agent {
                 kubernetes {
                     yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
@@ -172,7 +172,7 @@ pipeline {
             }
             steps {
                 container ('carvel') {
-                    sh "helm version"
+                    sh "echo Placeholder"
                 }
             }
         }

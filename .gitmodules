@@ -13,3 +13,6 @@
 [submodule "supplementalService"]
 	path = supplementalService
 	url = https://github.com/ProNibs/supplementalService.git
+[submodule "nip.io"]
+	path = nip.io
+	url = https://github.com/exentriquesolutions/nip.io.git

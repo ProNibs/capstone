@@ -92,7 +92,7 @@ Watch the magic as the pipeline runs!
 - Run `harborPullSecretSetup.sh`
 - Exec into the kind container and run `kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 8080:80 8443:443`
     - If you don't do the above two steps, you'll get ImageBackOffErrors or worse
-
+    
 ## After Jenkins Build
 
 Hopefully, you have a properly populated cluster now with the following installed:

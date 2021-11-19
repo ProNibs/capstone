@@ -47,72 +47,88 @@ pipeline {
             }
         }
         // This stage is redundant, but w/e bro
-        // stage('Install Kapp-Controller') {
-        //     agent {
-        //         kubernetes {
-        //             yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
-        //         }
-        //     }
-        //     environment {
-        //         KAPP_KUBECONFIG = credentials('kube-config-v2')
-        //         KAPP_NAMESPACE = 'default'
-        //     }
-        //     steps {
-        //         container ('carvel') {
-        //             sh "kapp deploy -y -a kc -f https://github.com/vmware-tanzu/carvel-kapp-controller/releases/latest/download/release.yml"
-        //             sh "kapp deploy -y -a default-cluster-rbac -f infrastructure/kapp-controller-sa/serviceAccount.yaml"
-        //         }
-        //     }
-        // }
-        // stage('Install Metallb') {
-        //     agent {
-        //         kubernetes {
-        //             yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
-        //         }
-        //     }
-        //     environment {
-        //         KAPP_KUBECONFIG = credentials('kube-config-v2')
-        //         KAPP_NAMESPACE = 'default'
-        //     }
-        //     steps {
-        //         container ('carvel') {
-        //             sh "kapp deploy -y -a metallb.kapp -f infrastructure/metallb/app/"
-        //         }
-        //     }
-        // }
-        // stage('Install Ingress-Nginx') {
-        //     agent {
-        //         kubernetes {
-        //             yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
-        //         }
-        //     }
-        //     environment {
-        //         KAPP_KUBECONFIG = credentials('kube-config-v2')
-        //         KAPP_NAMESPACE = 'default'
-        //     }
-        //     steps {
-        //         container ('carvel') {
-        //             sh "kapp deploy -y -a ingress.kapp -f infrastructure/ingress/app/"
-        //         }
-        //     }
-        // }
-        // stage('Install Cert-Manager') {
-        //     agent {
-        //         kubernetes {
-        //             yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
-        //         }
-        //     }
-        //     environment {
-        //         KAPP_KUBECONFIG = credentials('kube-config-v2')
-        //         KAPP_NAMESPACE = 'default'
-        //     }
-        //     steps {
-        //         container ('carvel') {
-        //             sh "kapp deploy -y -a cert-manager.kapp -f https://github.com/jetstack/cert-manager/releases/download/v1.6.0/cert-manager.yaml"
-        //             sh "kapp deploy -y -a self-signed.kapp -f infrastructure/cert-manager/k8s/"
-        //         }
-        //     }
-        // }
+        stage('Install Kapp-Controller') {
+            agent {
+                kubernetes {
+                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+                }
+            }
+            environment {
+                KAPP_KUBECONFIG = credentials('kube-config-v2')
+                KAPP_NAMESPACE = 'default'
+            }
+            steps {
+                container ('carvel') {
+                    sh "kapp deploy -y -a kc -f https://github.com/vmware-tanzu/carvel-kapp-controller/releases/latest/download/release.yml"
+                    sh "kapp deploy -y -a default-cluster-rbac -f infrastructure/kapp-controller-sa/serviceAccount.yaml"
+                }
+            }
+        }
+        stage('Install Metallb') {
+            agent {
+                kubernetes {
+                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+                }
+            }
+            environment {
+                KAPP_KUBECONFIG = credentials('kube-config-v2')
+                KAPP_NAMESPACE = 'default'
+            }
+            steps {
+                container ('carvel') {
+                    sh "kapp deploy -y -a metallb.kapp -f infrastructure/metallb/app/"
+                }
+            }
+        }
+        stage('Install Ingress-Nginx') {
+            agent {
+                kubernetes {
+                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+                }
+            }
+            environment {
+                KAPP_KUBECONFIG = credentials('kube-config-v2')
+                KAPP_NAMESPACE = 'default'
+            }
+            steps {
+                container ('carvel') {
+                    sh "kapp deploy -y -a ingress.kapp -f infrastructure/ingress/app/"
+                }
+            }
+        }
+        stage('Install Cert-Manager') {
+            agent {
+                kubernetes {
+                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+                }
+            }
+            environment {
+                KAPP_KUBECONFIG = credentials('kube-config-v2')
+                KAPP_NAMESPACE = 'default'
+            }
+            steps {
+                container ('carvel') {
+                    sh "kapp deploy -y -a cert-manager.kapp -f https://github.com/jetstack/cert-manager/releases/download/v1.6.0/cert-manager.yaml"
+                    sh "kapp deploy -y -a self-signed.kapp -f infrastructure/cert-manager/k8s/"
+                }
+            }
+        }
+        stage('Update Jenkins to use Ingress') {
+            agent {
+                kubernetes {
+                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+                }
+            }
+            environment {
+                KAPP_KUBECONFIG = credentials('kube-config-v2')
+                KAPP_NAMESPACE = 'default'
+            }
+            steps {
+                container ('carvel') {
+                    sh "kapp deploy -y -a jenkins-ingress.kapp -f infrastructure/jenkins/app-post-ingress/"
+                }
+            }
+        }
         // stage('Install Nexus') {
         //     agent {
         //         kubernetes {

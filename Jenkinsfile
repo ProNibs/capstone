@@ -47,23 +47,24 @@ pipeline {
             }
         }
         // This stage is redundant, but w/e bro
-        stage('Install Kapp-Controller') {
-            agent {
-                kubernetes {
-                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
-                }
-            }
-            environment {
-                KAPP_KUBECONFIG = credentials('kube-config-v2')
-                KAPP_NAMESPACE = 'default'
-            }
-            steps {
-                container ('carvel') {
-                    sh "kapp deploy -y -a kc -f https://github.com/vmware-tanzu/carvel-kapp-controller/releases/latest/download/release.yml"
-                    sh "kapp deploy -y -a default-cluster-rbac -f infrastructure/kapp-controller-sa/serviceAccount.yaml"
-                }
-            }
-        }
+        // stage('Install Kapp-Controller') {
+        //     agent {
+        //         kubernetes {
+        //             yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+        //         }
+        //     }
+        //     environment {
+        //         KAPP_KUBECONFIG = credentials('kube-config-v2')
+        //         KAPP_NAMESPACE = 'default'
+        //     }
+        //     steps {
+        //         container ('carvel') {
+        //             sh "kapp deploy -y -a kc -f https://github.com/vmware-tanzu/carvel-kapp-controller/releases/latest/download/release.yml"
+        //             sh "kapp deploy -y -a default-cluster-rbac -f infrastructure/kapp-controller-sa/serviceAccount.yaml"
+        //         }
+        //     }
+        // }
+
         stage('Install Metallb') {
             agent {
                 kubernetes {

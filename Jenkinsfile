@@ -142,10 +142,10 @@ pipeline {
             }
         }
         stage('Build Containers') {
-            // when { 
-            //     beforeAgent true
-            //     branch 'master' 
-            // }
+            when { 
+                beforeAgent true
+                branch 'master' 
+            }
             parallel {
                 stage('Build AggregatorService') {
                     steps {

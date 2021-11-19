@@ -142,12 +142,18 @@ pipeline {
             }
         }
         stage('Build Containers') {
-            when { 
-                beforeAgent true
-                branch 'master' 
-            }
+            // when { 
+            //     beforeAgent true
+            //     branch 'master' 
+            // }
             parallel {
+                // They crossing the streams
                 stage('Build AggregatorService') {
+                    agent {
+                        kubernetes {
+                            yamlFile 'infrastructure/jenkins/buildYamls/kaniko_pod.yaml'
+                        }
+                    }
                     steps {
                         echo "Building AggregatorService container..."
                         container('kaniko') {
@@ -156,6 +162,11 @@ pipeline {
                     }
                 }
                 stage('Build SupplementalService') {
+                    agent {
+                        kubernetes {
+                            yamlFile 'infrastructure/jenkins/buildYamls/kaniko_pod.yaml'
+                        }
+                    }
                     steps {
                         echo "Building SupplementalService container..."
                         container('kaniko') {    

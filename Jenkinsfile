@@ -286,6 +286,22 @@ pipeline {
                 }
             }
         }
+        stage('Deploy Dashboard API Service') {
+            agent {
+                kubernetes {
+                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+                }
+            }
+            environment {
+                KAPP_KUBECONFIG = credentials('kube-config-v2')
+                KAPP_NAMESPACE = 'default'
+            }
+            steps {
+                container ('carvel') {
+                    sh "kapp deploy -y -a dashboard-api -f dashboard-api/app/"
+                }
+            }
+        }
         
 
     }

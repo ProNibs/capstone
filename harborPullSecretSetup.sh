@@ -31,3 +31,6 @@ kubectl create secret docker-registry harborcred \
 
 # Patch default Service Account to default ImagePullSecrets to the secrets we just made
 kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "harborcred"}]}' -n dashboard-web
+kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "harborcred"}]}' -n dashboard-api
+kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "harborcred"}]}' -n supplemental-service
+kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "harborcred"}]}' -n aggregator-service

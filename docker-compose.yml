@@ -64,7 +64,7 @@ services:
         HOSTNAME: localhost
         PORT: 3002
       healthcheck:
-        test: ["CMD", "curl", "-f", "http://localhost:3001/api/v1/health"]
+        test: ["CMD", "curl", "-f", "http://localhost:3002/api/v1/health"]
 
 networks:
     apinet:

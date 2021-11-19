@@ -266,6 +266,14 @@ The script does the following:
     ```
         rewrite name harbor.127.0.0.1.nip.io my-service.harbor.svc.cluster.local
     ```
+- Exec into the KinD docker container and append the following to `/etc/containerd/config.toml`
+    - ```
+        [plugins."io.containerd.grpc.v1.cri".registry]
+          [plugins."io.containerd.grpc.v1.cri".registry.configs]
+            [plugins."io.containerd.grpc.v1.cri".registry.configs."harbor.127.0.0.1.nip.io:8443".tls]
+              insecure_skip_verify = true
+      ```
+    - `systemctl restart containerd` afterwards
 
 ## After the "After Pre-Reqs"
 
@@ -276,6 +284,18 @@ Click the `capstone` project and click `Build Now`.
 
 Watch the magic as the pipeline runs!
 
+## Mid-Jenkins Pause Items to do
+
+- Firstly, check that Ingress+Metallb is working correctly
+    - `kubectl get svc -n ingress-nginx`, should see the controller has an External-IP
+-Port forward the ingress controller locally
+    - `kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 8080:80 8443:443`
+- Navigate the Harbor UI and add a project called `my-repo`
+    - https://harbor.127.0.0.1.nip.io:8443
+- Run `harborPullSecretSetup.sh`
+- Exec into the kind container and run `kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 8080:80 8443:443`
+    - If you don't do the above two steps, you'll get ImageBackOffErrors or worse
+
 ## After Jenkins Build
 
 Hopefully, you have a properly populated cluster now with the following installed:
@@ -283,8 +303,6 @@ Hopefully, you have a properly populated cluster now with the following installe
 - Metallb
 - Ingress-nginx
 - cert-manager
-- Containers for the moisture farm were made
+- Harbor
+- Containers for the moisture farm were made and pushed to Harbor
 - Moisture farm apps were deployed in k8s
-
-To access items via ingress:
-`kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 8080:80 8443:443`

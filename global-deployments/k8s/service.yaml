@@ -1,0 +1,14 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: #@ data.values.appName + "-svc"
+  namespace: #@ data.values.namespace
+spec:
+  selector:
+    app: #@ data.values.appName
+  ports:
+  - port: 80
+    targetPort: #@ data.values.containerPort

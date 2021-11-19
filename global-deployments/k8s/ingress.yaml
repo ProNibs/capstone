@@ -1,0 +1,22 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: #@ data.values.appName + "-ingress"
+  labels:
+    app: #@ data.values.appName
+  namespace: #@ data.values.namespace
+spec:
+  rules:
+  - host: #@ data.values.ingressHost
+    http:
+      paths:
+      - pathType: Prefix
+        path: #@ data.values.path
+        backend:
+          service:
+            name: #@ data.values.appName + "-svc"
+            port: 
+              number: 80

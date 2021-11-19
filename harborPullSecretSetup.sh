@@ -27,3 +27,7 @@ kubectl create secret docker-registry harborcred \
     --docker-password=Harbor12345 \
     --docker-email=andrewsgraham1995@gmail.com \
     -n supplemental-service
+
+
+# Patch default Service Account to default ImagePullSecrets to the secrets we just made
+kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "harborcred"}]}' -n dashboard-web

@@ -1,0 +1,40 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: #@ data.values.appName + "-deployment"
+  namespace: #@ data.values.namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: #@ data.values.appName
+  template:
+    metadata:
+      labels:
+        app: #@ data.values.appName
+    spec:
+      containers:
+      - name: #@ data.values.appName
+        image: #@ "{}/{}:{}".format(data.values.repoName, data.values.imageName, data.values.tag)
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env: 
+          #@ for env in data.values.env:
+          - name: #@ env.name
+            value: #@ env.value
+          #@ end
+        ports:
+        - containerPort: #@ data.values.containerPort
+        livenessProbe:
+          httpGet:
+            path: #@ data.values.healthCheckPath
+            port: #@ data.values.containerPort
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          

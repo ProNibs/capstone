@@ -15,3 +15,7 @@ spec:
     port: 8443
     protocol: TCP
     targetPort: 8080
+  - name: normal-https-web
+    port: 443
+    protocol: TCP
+    targetPort: 8080

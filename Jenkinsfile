@@ -10,7 +10,7 @@ def repositories = [
 def containerBuild(String inputName) {
     // Need this, otherwise builds fail (probably going too quick or something dumb)
     sh "ls /kaniko/.docker/"
-    sh "ls `pwd/${inputName}"
+    sh "ls `pwd`/${inputName}"
     sh "/kaniko/executor -c `pwd`/${inputName} --skip-tls-verify \
        --destination harbor.127.0.0.1.nip.io:8443/my-repo/${inputName.toLowerCase()}:latest"
     // Need to split up; otherwise, it'll timeout from taking forever

@@ -233,7 +233,7 @@ pipeline {
             }
             steps {
                 container ('carvel') {
-                    sh "kapp deploy -y -a aggregator -f aggregatorServce/app/"
+                    sh "kapp deploy -y -a aggregator -f aggregatorService/app/"
                 }
             }
         }

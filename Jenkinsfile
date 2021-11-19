@@ -143,10 +143,10 @@ pipeline {
             }
         }
         stage('Build Containers') {
-            // when { 
-            //     beforeAgent true
-            //     branch 'master' 
-            // }
+            when { 
+                beforeAgent true
+                branch 'master' 
+            }
             parallel {
                 // They crossing the streams
                 stage('Build AggregatorService') {
@@ -265,6 +265,23 @@ pipeline {
                 }
             }
         }
+        stage('Deploy API Database Service') {
+            agent {
+                kubernetes {
+                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+                }
+            }
+            environment {
+                KAPP_KUBECONFIG = credentials('kube-config-v2')
+                KAPP_NAMESPACE = 'default'
+            }
+            steps {
+                container ('carvel') {
+                    sh "kapp deploy -y -a dashboard-api-database -f dashboard-database/app/"
+                }
+            }
+        }
+        
 
     }
 }

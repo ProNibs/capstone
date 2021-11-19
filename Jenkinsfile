@@ -217,54 +217,59 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Dashboard-Web') {
-            agent {
-                kubernetes {
-                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+        stage('Deploy the MicroServices') {
+            parallel {
+                stage('Deploy Dashboard-Web') {
+                    agent {
+                        kubernetes {
+                            yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+                        }
+                    }
+                    environment {
+                        KAPP_KUBECONFIG = credentials('kube-config-v2')
+                        KAPP_NAMESPACE = 'default'
+                    }
+                    steps {
+                        container ('carvel') {
+                            sh "kapp deploy -y -a dashboard-web -f dashboard-web/app/"
+                        }
+                    }
                 }
-            }
-            environment {
-                KAPP_KUBECONFIG = credentials('kube-config-v2')
-                KAPP_NAMESPACE = 'default'
-            }
-            steps {
-                container ('carvel') {
-                    sh "kapp deploy -y -a dashboard-web -f dashboard-web/app/"
+                stage('Deploy Aggregator Service') {
+                    agent {
+                        kubernetes {
+                            yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+                        }
+                    }
+                    environment {
+                        KAPP_KUBECONFIG = credentials('kube-config-v2')
+                        KAPP_NAMESPACE = 'default'
+                    }
+                    steps {
+                        container ('carvel') {
+                            sh "kapp deploy -y -a aggregator -f aggregatorService/app/"
+                        }
+                    }
+                }
+                stage('Deploy Supplemental Service') {
+                    agent {
+                        kubernetes {
+                            yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
+                        }
+                    }
+                    environment {
+                        KAPP_KUBECONFIG = credentials('kube-config-v2')
+                        KAPP_NAMESPACE = 'default'
+                    }
+                    steps {
+                        container ('carvel') {
+                            sh "kapp deploy -y -a supplemental -f supplementalService/app/"
+                        }
+                    }
                 }
             }
         }
-        stage('Deploy Aggregator Service') {
-            agent {
-                kubernetes {
-                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
-                }
-            }
-            environment {
-                KAPP_KUBECONFIG = credentials('kube-config-v2')
-                KAPP_NAMESPACE = 'default'
-            }
-            steps {
-                container ('carvel') {
-                    sh "kapp deploy -y -a aggregator -f aggregatorService/app/"
-                }
-            }
-        }
-        stage('Deploy Supplemental Service') {
-            agent {
-                kubernetes {
-                    yamlFile 'infrastructure/jenkins/buildYamls/carvel_tools.yaml'
-                }
-            }
-            environment {
-                KAPP_KUBECONFIG = credentials('kube-config-v2')
-                KAPP_NAMESPACE = 'default'
-            }
-            steps {
-                container ('carvel') {
-                    sh "kapp deploy -y -a supplemental -f supplementalService/app/"
-                }
-            }
-        }
+        
         stage('Deploy API Database Service') {
             agent {
                 kubernetes {

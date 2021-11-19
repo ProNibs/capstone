@@ -217,7 +217,7 @@ pipeline {
             }
             steps {
                 container ('carvel') {
-                    sh "kapp deploy -a dashboard-web -f dashboard-web/app/"
+                    sh "kapp deploy -y -a dashboard-web -f dashboard-web/app/"
                 }
             }
         }

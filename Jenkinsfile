@@ -164,6 +164,11 @@ pipeline {
                     }
                 }
                 stage('Build Dashboard-Database') {
+                    agent {
+                        kubernetes {
+                            yamlFile 'infrastructure/jenkins/buildYamls/kaniko_pod.yaml'
+                        }
+                    }
                     steps {
                         echo "Building Dashboard-Database container..."
                         container('kaniko') {    

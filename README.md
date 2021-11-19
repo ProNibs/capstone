@@ -84,15 +84,16 @@ Watch the magic as the pipeline runs!
 ## Mid-Jenkins Pause Items to do
 
 - Firstly, check that Ingress+Metallb is working correctly
-    - `kubectl get svc -n ingress-nginx`, should see the controller has an External-IP
--Port forward the ingress controller locally
+    - `kubectl get svc -n ingress-nginx`
+    - Should see the controller has an External-IP
+- Port forward the ingress controller locally
     - `kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 8080:80 8443:443`
 - Navigate the Harbor UI and add a project called `my-repo`
     - https://harbor.127.0.0.1.nip.io:8443
 - Run `harborPullSecretSetup.sh`
 - Exec into the kind container and run `kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 8080:80 8443:443`
     - If you don't do the above two steps, you'll get ImageBackOffErrors or worse
-    
+
 ## After Jenkins Build
 
 Hopefully, you have a properly populated cluster now with the following installed:
@@ -103,3 +104,5 @@ Hopefully, you have a properly populated cluster now with the following installe
 - Harbor
 - Containers for the moisture farm were made and pushed to Harbor
 - Moisture farm apps were deployed in k8s
+
+Navigate to https://dashboard.web.127.0.0.1.nip.io and you'll see it all working :)

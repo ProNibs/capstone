@@ -1,7 +1,7 @@
 # Overview
 
 This is my capstone project for Flatiron school.
-The capstone utilizes 3 git repos for deploying 3 microservices to display a React Frontend.
+The capstone utilizes git repos for deploying microservices to display a React Frontend.
 The rest of this README details my work and what I did.
 
 ## Setup Git repo

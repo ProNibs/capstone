@@ -143,10 +143,10 @@ pipeline {
             }
         }
         stage('Build Containers') {
-            when { 
-                beforeAgent true
-                branch 'master' 
-            }
+            // when { 
+            //     beforeAgent true
+            //     branch 'master' 
+            // }
             parallel {
                 // They crossing the streams
                 stage('Build AggregatorService') {
@@ -269,7 +269,7 @@ pipeline {
                 }
             }
         }
-        
+        // These are in order as they depend on each other
         stage('Deploy API Database Service') {
             agent {
                 kubernetes {
